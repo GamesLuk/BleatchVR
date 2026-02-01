@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\lukas\\documents\\unrealprojects\\bleatchvr\\source\\bleatchvr\\variant_shooter\\weapons\\shooterweaponholder.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\lukas\\documents\\unrealprojects\\bleatchvr\\intermediate\\build\\win64\\x64\\bleatchvreditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\lukas\\documents\\unrealprojects\\bleatchvr\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\bleatchvr\\definitions.bleatchvr.h",
+            "c:\\users\\lukas\\documents\\unrealprojects\\bleatchvr\\source\\bleatchvr\\variant_shooter\\weapons\\shooterweaponholder.h",
+            "c:\\users\\lukas\\documents\\unrealprojects\\bleatchvr\\intermediate\\build\\win64\\unrealeditor\\inc\\bleatchvr\\uht\\shooterweaponholder.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

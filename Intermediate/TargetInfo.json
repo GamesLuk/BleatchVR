@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "BleatchVR",
+			"Path": "..\\Source\\BleatchVR.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "BleatchVREditor",
+			"Path": "..\\Source\\BleatchVREditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"C:\\Users\\lukas\\Documents\\UnrealProjects\\BleatchVR\\Source\\BleatchVR\\BleatchVR.Build.cs",
+		"C:\\Users\\lukas\\Documents\\UnrealProjects\\BleatchVR\\Source\\BleatchVR.Target.cs",
+		"C:\\Users\\lukas\\Documents\\UnrealProjects\\BleatchVR\\Source\\BleatchVREditor.Target.cs"
+	],
+	"EngineVersion": "5.7.2"
+}

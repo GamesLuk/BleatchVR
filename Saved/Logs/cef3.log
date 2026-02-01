@@ -1,0 +1,23 @@
+[14696:21816:0201/211524.973:WARNING:chrome_main_delegate.cc(745)] This is Chrome version 128.0.6613.138 (not a warning)
+[14696:38156:0201/211525.004:ERROR:google_update_settings.cc(265)] Failed opening key Software\Chromium to set usagestats; result: 5
+[14696:21816:0201/211525.013:WARNING:account_consistency_mode_manager.cc(77)] Desktop Identity Consistency cannot be enabled as no OAuth client ID and client secret have been configured.
+[14696:21816:0201/211530.515:ERROR:device_event_log_impl.cc(196)] [21:15:30.190] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: Element nicht gefunden. (0x490)
+[40592:26912:0201/211530.515:WARNING:frame_impl.cc(430)] virtual CefFrameImpl::SendProcessMessage sent to detached frame 5-F99DAF12327389173B38553C7C1570E8 will be ignored
+[14696:7336:0201/211532.521:WARNING:browser_info.cc(345)] Returning a speculative frame for [8,9]
+[14696:21816:0201/211533.518:WARNING:browser_info.cc(345)] Returning a speculative frame for [10,9]
+[14696:21816:0201/211533.518:WARNING:browser_info.cc(345)] Returning a speculative frame for [10,9]
+[14696:21816:0201/211533.518:WARNING:browser_info.cc(345)] Returning a speculative frame for [10,9]
+[14696:21816:0201/211533.518:WARNING:browser_info.cc(345)] Returning a speculative frame for [10,9]
+[14696:7336:0201/211533.521:WARNING:browser_info.cc(345)] Returning a speculative frame for [10,9]
+[14696:7336:0201/211743.656:WARNING:browser_info.cc(345)] Returning a speculative frame for [11,9]
+[14696:21816:0201/211743.726:WARNING:browser_info.cc(345)] Returning a speculative frame for [11,9]
+[14696:21816:0201/211743.726:WARNING:browser_info.cc(345)] Returning a speculative frame for [11,9]
+[14696:21816:0201/211743.726:WARNING:browser_info.cc(345)] Returning a speculative frame for [11,9]
+[14696:21816:0201/211743.726:WARNING:browser_info.cc(345)] Returning a speculative frame for [11,9]
+[14696:7336:0201/211954.710:WARNING:browser_info.cc(345)] Returning a speculative frame for [21,9]
+[14696:21816:0201/211955.370:WARNING:browser_info.cc(345)] Returning a speculative frame for [21,9]
+[14696:21816:0201/211955.370:WARNING:browser_info.cc(345)] Returning a speculative frame for [21,9]
+[14696:21816:0201/211955.370:WARNING:browser_info.cc(345)] Returning a speculative frame for [21,9]
+[14696:21816:0201/211955.370:WARNING:browser_info.cc(345)] Returning a speculative frame for [21,9]
+[26472:19460:0201/212211.990:ERROR:shared_image_manager.cc(224)] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[14696:21816:0201/225507.175:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.

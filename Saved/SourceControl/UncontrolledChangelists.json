@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"changelists": [
+		{
+			"guid": "00000000000000000000000000000000",
+			"description": "Default Uncontrolled Changelist",
+			"files": [
+				"C:/Users/lukas/Documents/UnrealProjects/BleatchVR/Content/Custom/Player/WBP_PlayerUI.uasset",
+				"C:/Users/lukas/Documents/UnrealProjects/BleatchVR/Content/Custom/Textures/emptyBar.uasset",
+				"C:/Users/lukas/Documents/UnrealProjects/BleatchVR/Content/Custom/Textures/fullBarEnergy.uasset",
+				"C:/Users/lukas/Documents/UnrealProjects/BleatchVR/Content/Custom/Textures/fullBarHealth.uasset",
+				"C:/Users/lukas/Documents/UnrealProjects/BleatchVR/Content/Custom/Textures/fullBarExperience.uasset"
+			]
+		}
+	]
+}
