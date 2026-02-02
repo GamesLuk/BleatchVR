@@ -4,7 +4,7 @@
 Randomly placed Lootboxes. Player can open boxes by attacking them. 1/3 chance for each health, experience and food item. Then 1/2 chance for normal item or special item (is way more powerfull).
 
   **Health:**  
-    - Medicine  
+    - Bandages
     - Medi-Kit
 
   **Experience:**  
