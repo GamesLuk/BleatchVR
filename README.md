@@ -9,7 +9,7 @@ Randomly placed [Lootboxes](https://www.fab.com/listings/25fcaec7-bcfe-4c8d-801e
 
   **Experience:**  
     - [Paper](https://www.fab.com/listings/ee0bbb45-1b8f-4dbf-bcce-46e5f64d633d)    
-    - [Book](https://www.fab.com/listings/1b896bd3-059f-4829-a188-637b20631c59)  
+    - [Book](https://www.fab.com/listings/fc901b2d-34f2-4587-b7db-af184fd59513)  
 
   **Energy:**  
     - [Apple](https://www.fab.com/listings/c40aab2b-3767-4055-94bf-4283022516f9)  
