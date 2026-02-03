@@ -29,7 +29,7 @@ ALootBox::ALootBox()
 	RootComponent = Mesh;
 
 	// Mesh-Asset zuweisen
-	static ConstructorHelpers::FObjectFinder<UGeometryCollection> MeshAsset(TEXT("/Game/Fab/Megascans/3D/LootBox/High/ukqncf3bw_tier_1/StaticMeshes/LootBox.LootBox"));
+	static ConstructorHelpers::FObjectFinder<UGeometryCollection> MeshAsset(TEXT("/Game/Fab/Megascans/3D/LootBox/High/ukqncf3bw_tier_1/StaticMeshes/GC_LootBox.GC_LootBox"));
 	if (MeshAsset.Succeeded())
 	{
 		Mesh->SetRestCollection(MeshAsset.Object);
@@ -63,13 +63,14 @@ void ALootBox::ShowLootBox()
 
 }
 
-void ALootBox::HideLootBox()
+void ALootBox::ResetLootBox()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Hide LootBox!"));
 	if (Mesh)
 	{
 		Mesh->SetVisibility(false);
 		Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		Mesh->ResetState();
 	}
 }
 
@@ -77,11 +78,29 @@ void ALootBox::Destruct()
 {
 	if (Mesh)
 	{
-		URadialVector* RadialVector = NewObject<URadialVector>();
-		RadialVector->Magnitude = 5000.0f;
-		RadialVector->Position = GetActorLocation();
+		// Enable simulation first
+		Mesh->SetSimulatePhysics(true);
 
-		Mesh->ApplyPhysicsField(true, EGeometryCollectionPhysicsTypeEnum::Chaos_Dynamic, nullptr, RadialVector);
+		// Break all clusters at once (INDEX_NONE = all clusters)
+		Mesh->CrumbleCluster(INDEX_NONE);
+
+		// Apply radial impulse for explosion effect
+		Mesh->AddRadialImpulse(
+			GetActorLocation(),  // Origin
+			500.0f,              // Radius
+			50000.0f,            // Strength
+			RIF_Linear,
+			true                 // Velocity change
+		);
+
+		// Reset after 2 seconds
+		GetWorldTimerManager().SetTimer(
+			ResetTimerHandle,
+			this,
+			&ALootBox::ResetLootBox,
+			2.0f,
+			false
+		);
 	}
 }
 
