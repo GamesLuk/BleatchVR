@@ -1,5 +1,14 @@
 # BleatchVR
 
+## Status Bars
+There are 3 status bars in the game:
+
+  - Health (HP)
+  - Experience (XP)
+  - Energy (E)
+
+Currently, the bars are empty at a value of 0.04 and full at a value of 0.96, caused by the filling image beeing larger than the actual bar.
+
 ## Lootsystem
 Randomly placed [Lootboxes](https://www.fab.com/listings/25fcaec7-bcfe-4c8d-801e-df004ae2c958). Player can open boxes by attacking them. 1/3 chance for each health, experience and food item. Then 1/2 chance for normal item or special item (is way more powerfull).
 
