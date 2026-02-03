@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "Loot.h"
 #include "Bandages.generated.h"
 
 UCLASS()
-class BLEATCHVR_API ABandages : public AActor
+class BLEATCHVR_API ABandages : public ALoot
 {
 	GENERATED_BODY()
 	
@@ -22,5 +22,4 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
 };
