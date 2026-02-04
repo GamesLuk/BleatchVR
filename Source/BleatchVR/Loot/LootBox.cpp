@@ -1,10 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "LootBox.h"
 
 #include "Bandages.h"
-#include "Field/FieldSystemObjects.h"
 #include "GeometryCollection/GeometryCollectionComponent.h"
 
 class URadialVector;
@@ -18,29 +14,55 @@ namespace {
 	}
 }
 
-// Sets default values
 ALootBox::ALootBox()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	// Tick every frame
 	PrimaryActorTick.bCanEverTick = true;
 
-	// Setup Mesh (Destructible)
-	Mesh = CreateDefaultSubobject<UGeometryCollectionComponent>(TEXT("Mesh"));
-	RootComponent = Mesh;
+	// Setup intact Mesh
+	IntactMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("IntactMesh"));
+	SetRootComponent(IntactMesh);
 
-	// Mesh-Asset zuweisen
-	static ConstructorHelpers::FObjectFinder<UGeometryCollection> MeshAsset(TEXT("/Game/Fab/Megascans/3D/LootBox/High/ukqncf3bw_tier_1/StaticMeshes/GC_LootBox.GC_LootBox"));
-	if (MeshAsset.Succeeded())
-	{
-		Mesh->SetRestCollection(MeshAsset.Object);
-	}
+	IntactMesh->SetCollisionProfileName(TEXT("BlockAll"));
+	IntactMesh->SetNotifyRigidBodyCollision(true);
+
+	// Apply intact Mesh-Asset
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> IntactMeshAsset(
+		TEXT("/Game/Fab/Megascans/3D/LootBox/High/ukqncf3bw_tier_1/StaticMeshes/LootBox.LootBox"));
+	if (IntactMeshAsset.Succeeded())
+		IntactMesh->SetStaticMesh(IntactMeshAsset.Object);
 	
+	// Setup fractured Mesh
+	FracturedMesh = CreateDefaultSubobject<UGeometryCollectionComponent>(TEXT("FracturedMesh"));
+	FracturedMesh->SetupAttachment(RootComponent);
+
+	FracturedMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);	// No Collisions
+	FracturedMesh->SetSimulatePhysics(false);	// No Physics
+	FracturedMesh->SetVisibility(false);	// At first invisible
+	
+	// Apply fractured Mesh-Asset
+	static ConstructorHelpers::FObjectFinder<UGeometryCollection> FracturedMeshAsset(
+		TEXT("/Game/Fab/Megascans/3D/LootBox/High/ukqncf3bw_tier_1/StaticMeshes/GC_LootBox.GC_LootBox"));
+	if (FracturedMeshAsset.Succeeded())
+		FracturedMesh->SetRestCollection(FracturedMeshAsset.Object);
 }
 
 // Called when the game starts or when spawned
 void ALootBox::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	// Save current Transform
+	InitialTransform = GetActorTransform();
+	
+	// Save current FracturedMesh
+	OriginalCollection = const_cast<UGeometryCollection*>(
+		FracturedMesh->GetRestCollection()
+	);
+
+
+	// Register Listener
+	IntactMesh->OnComponentHit.AddDynamic(this, &ALootBox::OnTriggerHit);
 }
 
 // Called every frame
@@ -52,56 +74,97 @@ void ALootBox::Tick(float DeltaTime)
 
 }
 
+// Hit-Handler
+void ALootBox::OnTriggerHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, 
+	UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit
+)
+{
+	if (!OtherActor) return;
+
+	// Only destruct if tag "DestroyLootBox" is set
+	if (!OtherActor->ActorHasTag("DestroyLootBox")) return;
+
+	ExplodeLootBox();
+}
+
+// Explode and destruct
+void ALootBox::ExplodeLootBox()
+{
+	// deactivate StaticMesh
+	IntactMesh->SetVisibility(false);
+	IntactMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	// activate GeometryCollection
+	FracturedMesh->SetVisibility(true);
+	FracturedMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	FracturedMesh->SetSimulatePhysics(true);
+
+	// apply Chaos
+	FracturedMesh->ApplyKinematicField(
+		100000.f,
+		GetActorLocation()
+	);
+
+	// Radial Force
+	FracturedMesh->AddRadialImpulse(
+		GetActorLocation(),
+		300.f,
+		ExplosionStrength,
+		RIF_Linear,
+		true
+	);
+
+	// Reset-Timer
+	GetWorld()->GetTimerManager().SetTimer(
+		ResetTimer,
+		this,
+		&ALootBox::ResetLootBox,
+		ResetDelay,
+		false
+	);
+}
+
+// Make the lootbox visible
 void ALootBox::ShowLootBox()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Show LootBox!"));
-	if (Mesh)
-	{
-		Mesh->SetVisibility(true);
-		Mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	}
-
+	
+	SetActorHiddenInGame(false);
+	SetActorEnableCollision(true);
 }
 
-void ALootBox::ResetLootBox()
+// Make the lootbox invisible
+void ALootBox::HideLootBox()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Hide LootBox!"));
-	if (Mesh)
-	{
-		Mesh->SetVisibility(false);
-		Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		Mesh->ResetState();
-	}
+
+	SetActorHiddenInGame(true);
+	SetActorEnableCollision(false);
 }
 
-void ALootBox::Destruct()
+// Reset the Chaos state
+void ALootBox::ResetLootBox()
 {
-	if (Mesh)
-	{
-		// Enable simulation first
-		Mesh->SetSimulatePhysics(true);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("Reset LootBox"));
 
-		// Break all clusters at once (INDEX_NONE = all clusters)
-		Mesh->CrumbleCluster(INDEX_NONE);
+	// 1. Deactivate FracturedMesh
+	FracturedMesh->SetSimulatePhysics(false);
+	FracturedMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	FracturedMesh->SetHiddenInGame(true);
 
-		// Apply radial impulse for explosion effect
-		Mesh->AddRadialImpulse(
-			GetActorLocation(),  // Origin
-			500.0f,              // Radius
-			50000.0f,            // Strength
-			RIF_Linear,
-			true                 // Velocity change
-		);
+	// 2. Hard reset Chaos internal state
+	FracturedMesh->SetRestCollection(nullptr);
+	FracturedMesh->RecreatePhysicsState();
 
-		// Reset after 2 seconds
-		GetWorldTimerManager().SetTimer(
-			ResetTimerHandle,
-			this,
-			&ALootBox::ResetLootBox,
-			2.0f,
-			false
-		);
-	}
+	// 3. Restore original collection
+	FracturedMesh->SetRestCollection(OriginalCollection);
+	FracturedMesh->RecreatePhysicsState();
+	FracturedMesh->MarkRenderStateDirty();
+
+	// 4. Reset Actor transform
+	SetActorTransform(InitialTransform);
+	
+	HideLootBox();
 }
 
 void ALootBox::SpawnLoot()
