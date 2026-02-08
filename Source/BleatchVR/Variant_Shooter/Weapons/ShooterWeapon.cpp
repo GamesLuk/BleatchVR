@@ -40,19 +40,28 @@ void AShooterWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// subscribe to the owner's destroyed delegate
-	GetOwner()->OnDestroyed.AddDynamic(this, &AShooterWeapon::OnOwnerDestroyed);
+	AActor* OwnerActor = GetOwner();
+	if (!IsValid(OwnerActor))
+	{
+		// Pickup-Zustand → nichts initialisieren
+		return;
+	}
 
-	// cast the weapon owner
-	WeaponOwner = Cast<IShooterWeaponHolder>(GetOwner());
-	PawnOwner = Cast<APawn>(GetOwner());
+	OwnerActor->OnDestroyed.AddDynamic(this, &AShooterWeapon::OnOwnerDestroyed);
 
-	// fill the first ammo clip
+	WeaponOwner = Cast<IShooterWeaponHolder>(OwnerActor);
+	PawnOwner   = Cast<APawn>(OwnerActor);
+
+	if (!WeaponOwner || !PawnOwner)
+	{
+		UE_LOG(LogTemp, Error, TEXT("ShooterWeapon owner is invalid or does not implement IShooterWeaponHolder"));
+		return;
+	}
+
 	CurrentBullets = MagazineSize;
-
-	// attach the meshes to the owner
 	WeaponOwner->AttachWeaponMeshes(this);
 }
+
 
 void AShooterWeapon::EndPlay(EEndPlayReason::Type EndPlayReason)
 {
