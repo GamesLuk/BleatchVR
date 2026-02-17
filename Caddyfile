@@ -6,27 +6,49 @@
 	# Set Ports
 	http_port 80
 	https_port 443
+	
+	# Don't redirect HTTP to HTTPS automatically
+	auto_https disable_redirects
+}
+
+# Shared snippet for all sites
+(common_handlers) {
+    # Serve welcome page at root
+    handle / {
+        rewrite * /files/html/welcome.html
+        root * /app/files
+        uri strip_prefix /files
+        file_server
+    }
+
+    # Serve game page at /game
+    handle /game {
+        rewrite * /files/html/game.html
+        root * /app/files
+        uri strip_prefix /files
+        file_server
+    }
+
+    # Serve static files
+    handle /files/* {
+        root * /app/files
+        uri strip_prefix /files
+        file_server
+    }
 }
 
 # Site configuration for public domain
 https://bleatchvr.mzb-lev.de {
-
-    # Serve static files
-    handle /static/* {
-        root * /app/files
-        uri strip_prefix /static
-        file_server
-    }
+    import common_handlers
 }
 
 # Site configuration for internal hostname
 https://bleatchvr-caddy {
     tls internal
+    import common_handlers
+}
 
-    # Serve static files
-    handle /static/* {
-        root * /app/files
-        uri strip_prefix /static
-        file_server
-    }
+# Local development
+http://localhost {
+    import common_handlers
 }

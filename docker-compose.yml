@@ -5,13 +5,14 @@ services:
   caddy:
     image: caddy:2.11
     container_name: bleatchvr-caddy
+    command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile", "--watch"]
     volumes:
       - ./html:/app/files/html
       - ./js:/app/files/js
       - ./css:/app/files/css
       - ./Caddyfile:/etc/caddy/Caddyfile
     ports:
-      - "80:80"
+      - "8099:80"
       - "443:443"
 
   # Cloudflared (Proxy/Tunnel)
