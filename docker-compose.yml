@@ -10,6 +10,7 @@ services:
       - ./html:/app/files/html
       - ./js:/app/files/js
       - ./css:/app/files/css
+      - ./images:/app/files/images
       - ./Caddyfile:/etc/caddy/Caddyfile
     ports:
       - "8099:80"
