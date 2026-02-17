@@ -1,0 +1,32 @@
+# Global options block
+{
+	# Enable debug logging
+	debug
+
+	# Set Ports
+	http_port 80
+	https_port 443
+}
+
+# Site configuration for public domain
+https://bleatchvr.mzb-lev.de {
+
+    # Serve static files
+    handle /static/* {
+        root * /app/files
+        uri strip_prefix /static
+        file_server
+    }
+}
+
+# Site configuration for internal hostname
+https://bleatchvr-caddy {
+    tls internal
+
+    # Serve static files
+    handle /static/* {
+        root * /app/files
+        uri strip_prefix /static
+        file_server
+    }
+}

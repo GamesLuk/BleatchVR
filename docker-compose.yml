@@ -1,0 +1,22 @@
+name: bleatchvr
+services:
+
+  # Caddy (Webserver/Reverse Proxy)
+  caddy:
+    image: caddy:2.11
+    container_name: bleatchvr-caddy
+    volumes:
+      - ./html:/app/files/html
+      - ./js:/app/files/js
+      - ./css:/app/files/css
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - "80:80"
+      - "443:443"
+
+  # Cloudflared (Proxy/Tunnel)
+  cloudflared:
+    image: cloudflare/cloudflared:1800-17533b124c22
+    container_name: bleatchvr-cloudflared
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN}
+    restart: unless-stopped
