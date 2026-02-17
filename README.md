@@ -1,7 +1,7 @@
 # BleatchVR
 
 ## Lootsystem
-Randomly placed [Lootboxes](https://www.fab.com/listings/25fcaec7-bcfe-4c8d-801e-df004ae2c958). Player can open boxes by attacking them. 1/3 chance for each health, experience and food item. Then 1/2 chance for normal item or special item (is way more powerfull).
+Randomly placed [Lootboxes](https://www.fab.com/listings/25fcaec7-bcfe-4c8d-801e-df004ae2c958). Player can open boxes by attacking them. 1/3 chance for each health, experience and food item. Then 4/5 chance for normal item or 1/5 for special item (is way more powerfull).
 
   **Health:**  
     - [Bandages](https://www.fab.com/listings/1647b37a-0599-4166-add6-564ed703d140)  
@@ -16,4 +16,3 @@ Randomly placed [Lootboxes](https://www.fab.com/listings/25fcaec7-bcfe-4c8d-801e
     - [Lamb Ribs](https://www.fab.com/listings/dc2b6a23-aa22-41a9-b5ea-9639e8837488)  
 
 ## Credits
-- wooden progress bar PNG Designed By  from https://pngtree.com/freepng/orange-game-loading-progress-bar_4478918.html?sol=downref&id=bef (colors & parts of the design chaged)
