@@ -1,14 +1,39 @@
 <html>
-  <head>
-    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
-  </head>
-  <body>
-    <a-scene>
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
-    </a-scene>
-  </body>
+    <head>
+        <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+    </head>
+    <body>
+        <a-scene webxr="requiredFeatures: local-floor">
+            <!-- Pico Controller (Gamepad API) -->
+            <a-entity id="leftController"
+                      tracked-controls="hand: left; controller: 0; idPrefix: PICO; autoHide: false; space: grip">
+                      <a-gltf-model position="0 -0.622   -0.3" rotation="-90 0 0" src="/files/models/uploads_files_4693538_Long_Ax/GLTF/Long_Ax_1.gltf"></a-gltf-model>
+            </a-entity>
+            <a-entity id="rightController"
+                      tracked-controls="hand: right; controller: 1; idPrefix: PICO; autoHide: false; space: grip"
+                      raycaster="showLine: true; far: 10; lineColor: #24CAFF"
+                      cursor="rayOrigin: entity">
+                <a-cylinder radius="0.02" height="0.15" color="blue" position="0 0 -0.05" rotation="90 0 0"></a-cylinder>
+            </a-entity>
+
+            <!-- Beispiel-Interaktion -->
+            <a-box id="target" class="clickable" position="0 1.5 -2"></a-box>
+
+            <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+            <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+            <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+            <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+            <a-sky color="#ECECEC"></a-sky>
+        </a-scene>
+
+        <script>
+            const target = document.querySelector('#target');
+            const rightController = document.querySelector('#rightController');
+
+            // Trigger/Select-Event vom Controller
+            const triggerAction = () => target.setAttribute('color', 'red');
+            rightController.addEventListener('selectstart', triggerAction);
+            rightController.addEventListener('buttondown', triggerAction);
+        </script>
+    </body>
 </html>
