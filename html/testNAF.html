@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <title>My Networked-Aframe Scene</title>
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.min.js"></script>
+    <script src="https://unpkg.com/networked-aframe@^0.14.0/dist/networked-aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene networked-scene="
+      room: lobby;
+      adapter: socketio;
+      serverURL: /;
+    ">
+      <a-assets>
+        <template id="avatar-template">
+          <a-sphere color="#5985ff" radius="0.3"></a-sphere>
+        </template>
+      </a-assets>
+      
+      <!-- Local player with networking -->
+      <a-entity id="player" 
+                networked="template:#avatar-template;attachTemplateToLocal:false;" 
+                camera 
+                wasd-controls 
+                look-controls 
+                position="0 1.6 0">
+      </a-entity>
+      
+      <!-- Environment -->
+      <a-plane color="#7BC8A4" rotation="-90 0 0" width="20" height="20"></a-plane>
+      <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+  </body>
+</html>
