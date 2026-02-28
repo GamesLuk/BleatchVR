@@ -1,45 +1,68 @@
 <html>
 	<head>
 		<script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
-		<script src="/files/js/components/hud-overlay.js"></script>
-		<script src="/files/js/code/player.js"></script>
-		<script src="/files/js/code/hud-bars.js"></script>
+		<script type="module" src="/files/js/main.js"></script>
 	</head>
 	<body>
 		<a-scene webxr="requiredFeatures: local-floor">
-
 			<a-assets>
+				<!-- HUD Bar Images -->
 				<img id="empty-bar" src="/files/images/hud/bars/emptyBar.png">
-				<img id="full-energy-bar" src="/files/images/hud/bars/fullBarEnergy.png">
 				<img id="full-health-bar" src="/files/images/hud/bars/fullBarHealth.png">
+				<img id="full-energy-bar" src="/files/images/hud/bars/fullBarEnergy.png">
 				<img id="full-experience-bar" src="/files/images/hud/bars/fullBarExperience.png">
+				
+				<!-- HUD Hotbar Image -->
+				<img id="hotbar" src="/files/images/hud/hotbar.png">
+				<img id="selector" src="/files/images/hud/selector.png">
+				
+				<!-- Item Images -->
+				<img id="empty" src="/files/images/items/empty.png">
+				<img id="bandages" src="/files/images/items/bandages.png">
+				<img id="medic-kit" src="/files/images/items/medic-kit.png">
+				<img id="scroll" src="/files/images/items/scroll.png">
+				<img id="book" src="/files/images/items/book.png">
+				<img id="apple" src="/files/images/items/apple.png">
+				<img id="bread" src="/files/images/items/bread.png">
+
+				<!-- Models -->
+				<a-asset-item id="shield-model" src="/files/models/shield.glb"></a-asset-item>
+				<a-asset-item id="weapon-model" src="/files/models/weapon/Long_Ax_1.gltf"></a-asset-item>
 			</a-assets>
 
 			<!-- Pico Controller (Gamepad API) -->
 			<a-entity id="shield" tracked-controls="hand: left; controller: 0; idPrefix: PICO; autoHide: false; space: grip">
-			<a-gltf-model position="-0.1 0 0.42" rotation="0 -90 90" scale="0.5 0.5 0.5" src="/files/models/shield.glb"></a-gltf-model>
+			<a-gltf-model position="-0.1 0 0.42" rotation="0 -90 90" scale="0.5 0.5 0.5" src="#shield-model"></a-gltf-model>
 			</a-entity>
 			<a-entity id="weapon"
 					tracked-controls="hand: right; controller: 1; idPrefix: PICO; autoHide: false; space: grip"
 					raycaster="showLine: true; far: 10; lineColor: #24CAFF"
 					cursor="rayOrigin: entity">
-			<a-gltf-model position="0.622 0 -0.3" rotation="0 -90 90" src="/files/models/weapon/Long_Ax_1.gltf"></a-gltf-model>
+			<a-gltf-model position="0.622 0 -0.3" rotation="0 -90 90" src="#weapon-model"></a-gltf-model>
 			</a-entity>
 
-			<!-- Beispiel-Interaktion -->
-			<a-entity camera look-controls wasd-controls obb-collider position="0 1.6 0">
+				<!-- Beispiel-Interaktion -->
+				<a-entity camera look-controls wasd-controls obb-collider position="0 1.6 0">
 
-			<a-entity id="hud-bars" visible="true">
-				<a-image src="#empty-bar" hud-overlay position="2.66 1.5 -2" width="0.860" height="0.081" repeat="1 1"></a-image>
-				<a-image id="health-bar" src="#full-health-bar" position="2.66 1.5 -2" width="0.860" height="0.081" repeat="1 1"></a-image>
+				<a-entity id="hud-bars" visible="true">
+					<a-image src="#empty-bar" hud-bar="num: 0"></a-image>
+					<a-image id="health-bar" src="#full-health-bar" hud-bar="num: 0"></a-image>
 
-				<a-image src="#empty-bar" hud-overlay position="2.66 1.375 -2" width="0.860" height="0.081" repeat="1 1"></a-image>
-				<a-image id="experience-bar" hud-overlay src="#full-experience-bar" position="2.66 1.375 -2" width="0.860" height="0.081" repeat="1 1"></a-image>
+					<a-image src="#empty-bar" hud-bar="num: 1"></a-image>
+					<a-image id="experience-bar" src="#full-experience-bar" hud-bar="num: 1"></a-image>
 
-				<a-image src="#empty-bar" hud-overlay position="2.66 1.25 -2" width="0.860" height="0.081" repeat="1 1"></a-image>
-				<a-image id="energy-bar" hud-overlay src="#full-energy-bar" position="2.66 1.25 -2" width="0.860" height="0.081" repeat="1 1"></a-image>
-			</a-entity>
+					<a-image src="#empty-bar" hud-bar="num: 2"></a-image>
+					<a-image id="energy-bar" src="#full-energy-bar" hud-bar="num: 2"></a-image>
+				</a-entity>
 
+				<a-image id="hud-hotbar" src="#hotbar" hud-overlay position="2.4 -1.5 -2" width="1.008" height="0.216" repeat="1 1">
+					<a-image id="hotbar-selector" src="#selector" hud-overlay="renderOrder: 101" position="0 0 0" width="0.216" height="0.216"></a-image>
+					<a-image id="hotbar-slot0" src="#apple" hud-hotbar-slot="num: 0"></a-image>
+					<a-image id="hotbar-slot1" src="#bread" hud-hotbar-slot="num: 1"></a-image>
+					<a-image id="hotbar-slot2" src="#bandages" hud-hotbar-slot="num: 2"></a-image>
+					<a-image id="hotbar-slot3" src="#scroll" hud-hotbar-slot="num: 3"></a-image>
+					<a-image id="hotbar-slot4" src="#book" hud-hotbar-slot="num: 4"></a-image>
+				</a-image>
 
 			</a-entity>
 			<a-box id="target" class="clickable" obb-collider position="0 1.5 -1.2"></a-box>
@@ -52,10 +75,11 @@
 		</a-scene>
 
 		<script>
-			// Warte bis A-Frame vollständig geladen ist
+			// Initialize HUD bars after scene is loaded
 			const scene = document.querySelector('a-scene');
 			scene.addEventListener('loaded', () => {
 				updateHudBars();
+				updateHotbarSelector();
 			});
 
 			const target = document.querySelector('#target');
