@@ -34,6 +34,12 @@
         root * /app/files
         uri strip_prefix /files
         file_server
+        header {
+            # Verhindere Caching für Entwicklung
+            Cache-Control "no-cache, no-store, must-revalidate"
+            Pragma "no-cache"
+            Expires "0"
+        }
     }
 }
 

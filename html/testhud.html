@@ -1,0 +1,71 @@
+<html>
+	<head>
+		<script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+		<script src="/files/js/components/hud-overlay.js"></script>
+		<script src="/files/js/code/player.js"></script>
+		<script src="/files/js/code/hud-bars.js"></script>
+	</head>
+	<body>
+		<a-scene webxr="requiredFeatures: local-floor">
+
+			<a-assets>
+				<img id="empty-bar" src="/files/images/hud/bars/emptyBar.png">
+				<img id="full-energy-bar" src="/files/images/hud/bars/fullBarEnergy.png">
+				<img id="full-health-bar" src="/files/images/hud/bars/fullBarHealth.png">
+				<img id="full-experience-bar" src="/files/images/hud/bars/fullBarExperience.png">
+			</a-assets>
+
+			<!-- Pico Controller (Gamepad API) -->
+			<a-entity id="shield" tracked-controls="hand: left; controller: 0; idPrefix: PICO; autoHide: false; space: grip">
+			<a-gltf-model position="-0.1 0 0.42" rotation="0 -90 90" scale="0.5 0.5 0.5" src="/files/models/shield.glb"></a-gltf-model>
+			</a-entity>
+			<a-entity id="weapon"
+					tracked-controls="hand: right; controller: 1; idPrefix: PICO; autoHide: false; space: grip"
+					raycaster="showLine: true; far: 10; lineColor: #24CAFF"
+					cursor="rayOrigin: entity">
+			<a-gltf-model position="0.622 0 -0.3" rotation="0 -90 90" src="/files/models/weapon/Long_Ax_1.gltf"></a-gltf-model>
+			</a-entity>
+
+			<!-- Beispiel-Interaktion -->
+			<a-entity camera look-controls wasd-controls obb-collider position="0 1.6 0">
+
+			<a-entity id="hud-bars" visible="true">
+				<a-image src="#empty-bar" hud-overlay position="2.66 1.5 -2" width="0.860" height="0.081" repeat="1 1"></a-image>
+				<a-image id="health-bar" src="#full-health-bar" position="2.66 1.5 -2" width="0.860" height="0.081" repeat="1 1"></a-image>
+
+				<a-image src="#empty-bar" hud-overlay position="2.66 1.375 -2" width="0.860" height="0.081" repeat="1 1"></a-image>
+				<a-image id="experience-bar" hud-overlay src="#full-experience-bar" position="2.66 1.375 -2" width="0.860" height="0.081" repeat="1 1"></a-image>
+
+				<a-image src="#empty-bar" hud-overlay position="2.66 1.25 -2" width="0.860" height="0.081" repeat="1 1"></a-image>
+				<a-image id="energy-bar" hud-overlay src="#full-energy-bar" position="2.66 1.25 -2" width="0.860" height="0.081" repeat="1 1"></a-image>
+			</a-entity>
+
+
+			</a-entity>
+			<a-box id="target" class="clickable" obb-collider position="0 1.5 -1.2"></a-box>
+
+			<a-box position="3 1.5 -1.2" obb-collider rotation="0 45 0" color="#4CC3D9"></a-box>
+			<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+			<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+			<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+			<a-sky color="#ECECEC"></a-sky>
+		</a-scene>
+
+		<script>
+			// Warte bis A-Frame vollständig geladen ist
+			const scene = document.querySelector('a-scene');
+			scene.addEventListener('loaded', () => {
+				updateHudBars();
+			});
+
+			const target = document.querySelector('#target');
+			const weapon = document.querySelector('#weapon');
+
+			// Trigger/Select-Event vom Controller
+			const triggerAction = () => target.setAttribute('color', 'blue');
+			const undoAction = () => target.setAttribute('color', 'green');
+			target.addEventListener('obbcollisionstarted', triggerAction);
+			target.addEventListener('obbcollisionended', undoAction);
+		</script>
+	</body>
+</html>
