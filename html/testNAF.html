@@ -4,6 +4,7 @@
     <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.min.js"></script>
     <script src="https://unpkg.com/networked-aframe@^0.14.0/dist/networked-aframe.min.js"></script>
+    <script type="module" src="/files/js/main.js"></script>
   </head>
   <body>
     <a-scene networked-scene="
@@ -13,17 +14,16 @@
     ">
       <a-assets>
         <template id="avatar-template">
-          <a-sphere color="#5985ff" radius="0.3"></a-sphere>
+          <a-sphere color="#5985ff" radius="0.5" collision-box="width: 0.5; height: 0.5; depth: 0.5" position="0 10 0"></a-sphere>
         </template>
       </a-assets>
       
       <!-- Local player with networking -->
       <a-entity id="player" 
                 networked="template:#avatar-template;attachTemplateToLocal:false;" 
-                camera 
-                wasd-controls 
-                look-controls 
+                player-controller="speed: 15; radius: 0.25"
                 position="0 1.6 0">
+        <a-camera look-controls="pointerLockEnabled: true" wasd-controls="enabled: false" position="0 0 0"></a-camera>
       </a-entity>
       
       <!-- Environment -->
