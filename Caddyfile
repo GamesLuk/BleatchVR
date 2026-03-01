@@ -13,6 +13,11 @@
 
 # Shared snippet for all sites
 (common_handlers) {
+    # Reverse proxy for Socket.io backend
+    handle /socket.io/* {
+        reverse_proxy nodejs:8080
+    }
+
     # Serve welcome page at root
     handle / {
         rewrite * /files/html/welcome.html

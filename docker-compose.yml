@@ -15,7 +15,16 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile
     ports:
       - "8099:80"
-      - "443:443"
+
+  # Node.js (Backend API - Socket.io Server)
+  nodejs:
+    image: node:18-alpine
+    container_name: bleatchvr-nodejs
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    command: sh -c "npm install && npm start"
+    restart: unless-stopped
 
   # Cloudflared (Proxy/Tunnel)
   cloudflared:
