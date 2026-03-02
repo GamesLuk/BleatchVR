@@ -1,6 +1,6 @@
 # BleatchVR
 
-## Lootsystem
+## Lootsystem (old)
 Randomly placed [Lootboxes](https://www.fab.com/listings/25fcaec7-bcfe-4c8d-801e-df004ae2c958). Player can open boxes by attacking them. 1/3 chance for each health, experience and food item. Then 4/5 chance for normal item or 1/5 for special item (is way more powerfull).
 
   **Health:**  
@@ -16,3 +16,7 @@ Randomly placed [Lootboxes](https://www.fab.com/listings/25fcaec7-bcfe-4c8d-801e
     - [Lamb Ribs](https://www.fab.com/listings/dc2b6a23-aa22-41a9-b5ea-9639e8837488)  
 
 ## Credits
+<b>hover.mp3:</b> Sound Effect by <a href="https://pixabay.com/users/lesiakower-25701529/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=399749">Lesiakower</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=399749">Pixabay</a>
+
+
+<b>click.mp3:</b> Sound Effect by <a href="https://pixabay.com/users/666herohero-25759907/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=21156">666HeroHero</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=21156">Pixabay</a>

@@ -28,6 +28,7 @@
 				<!-- Models -->
 				<a-asset-item id="shield-model" src="/files/models/shield.glb"></a-asset-item>
 				<a-asset-item id="weapon-model" src="/files/models/weapon/Long_Ax_1.gltf"></a-asset-item>
+				<a-asset-item id="lootbox-model" src="/files/models/lootbox.glb"></a-asset-item>
 			</a-assets>
 
 			<!-- Pico Controller (Gamepad API) -->
@@ -67,6 +68,12 @@
 			</a-entity>
 			<a-box id="target" class="clickable" obb-collider position="0 1.5 -1.2"></a-box>
 
+			<a-gltf-model id="lootbox0" position="2 0 -2" lootbox></a-gltf-model>
+			<a-gltf-model id="lootbox1" position="3 0 -2" lootbox></a-gltf-model>
+			<a-gltf-model id="lootbox2" position="4 0 -2" lootbox></a-gltf-model>
+			<a-gltf-model id="lootbox3" position="5 0 -2" lootbox></a-gltf-model>
+			<a-gltf-model id="lootbox4" position="6 0 -2" lootbox></a-gltf-model>
+
 			<a-box position="3 1.5 -1.2" obb-collider rotation="0 45 0" color="#4CC3D9"></a-box>
 			<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
 			<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
@@ -75,6 +82,7 @@
 		</a-scene>
 
 		<script>
+		// Wait for modules to load first
 			// Initialize HUD bars after scene is loaded
 			const scene = document.querySelector('a-scene');
 			scene.addEventListener('loaded', () => {

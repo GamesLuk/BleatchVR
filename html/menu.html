@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BleatchVR - Medieval Survival</title>
+    <link rel="stylesheet" href="../css/menu.css">
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/fluency/96/sword.png">
+</head>
+<body>
+    <!-- Background Video/Image -->
+    <div class="bg-video-container">
+        <!-- Placeholder: Medieval forest/castle background -->
+        <img class="bg-video" 
+             src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1920&q=80" 
+             alt="Medieval Background"
+             style="object-fit: cover;">
+        <!-- Alternative: Add a video later 
+        <video class="bg-video" autoplay muted loop>
+            <source src="../videos/medieval-bg.mp4" type="video/mp4">
+        </video>
+        -->
+    </div>
+
+    <!-- Dark Overlay -->
+    <div class="bg-overlay"></div>
+
+    <!-- Animated Particles -->
+    <div class="particles-container">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Main Menu Container -->
+    <div class="menu-container">
+        <div class="content-wrapper">
+            
+            <!-- Title Section -->
+            <section class="title-section">
+                <!-- Optional: Add game logo image 
+                <div class="game-logo">
+                    <img class="logo-image" src="../images/logo.png" alt="BleatchVR Logo">
+                </div>
+                -->
+                <h1 class="game-title">BleatchVR</h1>
+                <p class="game-subtitle">Medieval Survival Realm</p>
+            </section>
+
+            <!-- Navigation Buttons -->
+            <nav class="menu-nav">
+                <a href="game.html?lobby=multiplayer" class="menu-button primary">
+                    <span class="menu-button-icon">🛡️</span>
+                    <span>Join Multiplayer</span>
+                </a>
+                
+                <a href="game.html?lobby=pvp" class="menu-button primary">
+                    <span class="menu-button-icon">⚔️</span>
+                    <span>PvP Arena</span>
+                </a>
+                
+                <a href="game.html?lobby=coop" class="menu-button primary">
+                    <span class="menu-button-icon">🏰</span>
+                    <span>Co-op Survival</span>
+                </a>
+                
+                <a href="game.html?lobby=solo" class="menu-button primary">
+                    <span class="menu-button-icon">🌲</span>
+                    <span>Solo Adventure</span>
+                </a>
+                
+                <a href="testphysics.html" class="menu-button secondary">
+                    <span class="menu-button-icon">🔧</span>
+                    <span>Physics Test</span>
+                </a>
+                
+                <a href="testNAF.html" class="menu-button secondary">
+                    <span class="menu-button-icon">📡</span>
+                    <span>Network Test</span>
+                </a>
+            </nav>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                
+                <!-- Developers -->
+                <div class="developers">
+                    <a href="https://github.com/Gamesluk" class="developer" target="_blank" rel="noopener noreferrer">
+                        <div class="developer-avatar">
+                            <img src="https://avatars.githubusercontent.com/u/189043406?v=4" alt="GamesLuk">
+                        </div>
+                        <span class="developer-name">GamesLuk</span>
+                    </a>
+                    
+                    <a href="https://github.com/Rexitexi" class="developer" target="_blank" rel="noopener noreferrer">
+                        <div class="developer-avatar">
+                            <img src="https://avatars.githubusercontent.com/u/77351479?v=4" alt="Rexitexi">
+                        </div>
+                        <span class="developer-name">Rexitexi</span>
+                    </a>
+                </div>
+
+                <!-- GitHub Link -->
+                <a href="https://github.com/GamesLuk/BleatchVR" class="github-link" target="_blank" rel="noopener noreferrer">
+                    <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0.297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385 0.6 0.113 0.82-0.258 0.82-0.577 0-0.285-0.01-1.04-0.015-2.04-3.338 0.724-4.042-1.61-4.042-1.61-0.546-1.385-1.335-1.755-1.335-1.755-1.087-0.744 0.084-0.729 0.084-0.729 1.205 0.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495 0.998 0.108-0.776 0.417-1.305 0.76-1.605-2.665-0.3-5.466-1.332-5.466-5.93 0-1.31 0.465-2.38 1.235-3.22-0.135-0.303-0.54-1.523 0.105-3.176 0 0 1.005-0.322 3.3 1.23 0.96-0.267 1.98-0.399 3-0.405 1.02 0.006 2.04 0.138 3 0.405 2.28-1.552 3.285-1.23 3.285-1.23 0.645 1.653 0.24 2.873 0.12 3.176 0.765 0.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92 0.42 0.36 0.81 1.096 0.81 2.22 0 1.606-0.015 2.896-0.015 3.286 0 0.315 0.21 0.69 0.825 0.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                    </svg>
+                    <span>View on GitHub</span>
+                </a>
+                
+            </div>
+            
+            <!-- Version Info -->
+            <div class="version">Alpha v1.0.0</div>
+        </footer>
+
+        <!-- Music Controls -->
+        <div class="music-controls">
+            <button class="music-control-btn" id="musicMuteBtn" title="Music On/Off">
+                <svg class="icon-music-on" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+                <svg class="icon-music-off" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                </svg>
+            </button>
+            <button class="music-control-btn" id="musicTypeBtn" title="Switch Vocal/Instrumental" style="display: none;">
+                <svg class="icon-vocal" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3v9.28c-.47-.17-.97-.28-1.5-.28C8.01 12 6 14.01 6 16.5S8.01 21 10.5 21c2.31 0 4.2-1.75 4.45-4H15V6h4V3h-7z"/>
+                </svg>
+                <svg class="icon-instrumental" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                </svg>
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================
+        // SOUND SYSTEM - File-based only
+        // ============================================
+        
+        class MenuSoundManager {
+            constructor() {
+                this.sounds = {};
+                this.musicTracks = {
+                    vocal: null,
+                    instrumental: null
+                };
+                this.currentTrack = null;
+                this.volume = {
+                    master: 0.6,
+                    sfx: 1.0,
+                    music: 0.15
+                };
+                this.initialized = false;
+                this.soundsLoaded = 0;
+                this.isMusicMuted = false;
+                this.isVocal = true; // Start with vocal track
+            }
+
+            init() {
+                if (this.initialized) return;
+                
+                this.loadSounds();
+                this.initialized = true;
+                console.log('🔊 Sound system initializing...');
+            }
+
+            // Load sound files
+            loadSounds() {
+                const soundFiles = {
+                    hover: '../sounds/hover.mp3',
+                    click: '../sounds/click.mp3',
+                    vocal: '../sounds/background-music.mp3',
+                    instrumental: '../sounds/background-music2.mp3'
+                };
+
+                Object.keys(soundFiles).forEach(key => {
+                    const audio = new Audio();
+                    audio.src = soundFiles[key];
+                    audio.preload = 'auto';
+                    
+                    if (key === 'vocal' || key === 'instrumental') {
+                        audio.loop = true;
+                        audio.volume = 0; // Start at 0 for fade-in
+                        
+                        audio.addEventListener('canplaythrough', () => {
+                            this.musicTracks[key] = audio;
+                            console.log(`✅ Loaded: ${soundFiles[key]}`);
+                        }, { once: true });
+                    } else {
+                        audio.volume = this.volume.master * this.volume.sfx;
+                        
+                        audio.addEventListener('canplaythrough', () => {
+                            this.sounds[key] = audio;
+                            this.soundsLoaded++;
+                            console.log(`✅ Loaded: ${key}.mp3 (${this.soundsLoaded}/2)`);
+                        }, { once: true });
+                    }
+                    
+                    audio.addEventListener('error', (e) => {
+                        console.warn(`❌ Failed to load: ${soundFiles[key]}`, e);
+                    });
+                    
+                    // Trigger loading
+                    audio.load();
+                });
+            }
+
+            playHoverSound() {
+                if (!this.sounds.hover) return;
+                
+                const sound = this.sounds.hover.cloneNode();
+                sound.volume = this.volume.master * this.volume.sfx * 0.5;
+                sound.play().catch(() => {}); // Silently fail if not allowed
+            }
+
+            playClickSound() {
+                if (!this.sounds.click) return;
+                
+                const sound = this.sounds.click.cloneNode();
+                sound.volume = this.volume.master * this.volume.sfx;
+                sound.play().catch(() => {}); // Silently fail if not allowed
+            }
+
+            playSelectSound() {
+                // Use hover sound for selection navigation
+                this.playHoverSound();
+            }
+
+            playBackgroundMusic() {
+                const trackToPlay = this.isVocal ? this.musicTracks.vocal : this.musicTracks.instrumental;
+                if (!trackToPlay) return;
+                
+                this.currentTrack = trackToPlay;
+                
+                // Start playing
+                trackToPlay.play().catch(() => {});
+                
+                // Fade in over 3 seconds
+                this.fadeInMusic(3000);
+            }
+
+            fadeInMusic(duration = 3000) {
+                if (!this.currentTrack) return;
+                
+                const targetVolume = this.volume.master * this.volume.music;
+                const steps = 60; // 60 steps for smooth fade
+                const stepTime = duration / steps;
+                const volumeIncrement = targetVolume / steps;
+                let currentStep = 0;
+                
+                const fadeInterval = setInterval(() => {
+                    if (currentStep >= steps || !this.currentTrack) {
+                        clearInterval(fadeInterval);
+                        if (this.currentTrack) {
+                            this.currentTrack.volume = targetVolume;
+                        }
+                        return;
+                    }
+                    
+                    currentStep++;
+                    this.currentTrack.volume = volumeIncrement * currentStep;
+                }, stepTime);
+            }
+
+            fadeOutMusic(duration = 800, callback = null) {
+                if (!this.currentTrack) return;
+                
+                const startVolume = this.currentTrack.volume;
+                const steps = 40; // 40 steps for smooth fade
+                const stepTime = duration / steps;
+                const volumeDecrement = startVolume / steps;
+                let currentStep = 0;
+                
+                const fadeInterval = setInterval(() => {
+                    if (currentStep >= steps || !this.currentTrack) {
+                        clearInterval(fadeInterval);
+                        if (this.currentTrack) {
+                            this.currentTrack.volume = 0;
+                        }
+                        if (callback) callback();
+                        return;
+                    }
+                    
+                    currentStep++;
+                    this.currentTrack.volume = startVolume - (volumeDecrement * currentStep);
+                }, stepTime);
+            }
+
+            toggleMute() {
+                this.isMusicMuted = !this.isMusicMuted;
+                
+                if (this.isMusicMuted) {
+                    // Fade out
+                    this.fadeOutMusic(800, () => {
+                        if (this.currentTrack) {
+                            this.currentTrack.pause();
+                        }
+                    });
+                } else {
+                    // Fade in
+                    const trackToPlay = this.isVocal ? this.musicTracks.vocal : this.musicTracks.instrumental;
+                    if (trackToPlay) {
+                        this.currentTrack = trackToPlay;
+                        trackToPlay.play().catch(() => {});
+                        this.fadeInMusic(800);
+                    }
+                }
+                
+                this.updateMusicControls();
+            }
+
+            switchMusicType() {
+                if (this.isMusicMuted) return; // Don't switch when muted
+                
+                this.isVocal = !this.isVocal;
+                const newTrack = this.isVocal ? this.musicTracks.vocal : this.musicTracks.instrumental;
+                
+                if (!newTrack || !this.currentTrack) return;
+                
+                // Fade out current track
+                this.fadeOutMusic(600, () => {
+                    if (this.currentTrack) {
+                        this.currentTrack.pause();
+                        this.currentTrack.currentTime = 0;
+                    }
+                    
+                    // Start new track
+                    this.currentTrack = newTrack;
+                    newTrack.play().catch(() => {});
+                    this.fadeInMusic(600);
+                });
+                
+                this.updateMusicControls();
+            }
+
+            updateMusicControls() {
+                // Update mute button icons
+                const muteBtn = document.getElementById('musicMuteBtn');
+                if (muteBtn) {
+                    const iconOn = muteBtn.querySelector('.icon-music-on');
+                    const iconOff = muteBtn.querySelector('.icon-music-off');
+                    
+                    if (this.isMusicMuted) {
+                        iconOn.style.display = 'none';
+                        iconOff.style.display = 'block';
+                    } else {
+                        iconOn.style.display = 'block';
+                        iconOff.style.display = 'none';
+                    }
+                }
+                
+                // Show/hide type button
+                const typeBtn = document.getElementById('musicTypeBtn');
+                if (typeBtn) {
+                    typeBtn.style.display = this.isMusicMuted ? 'none' : 'flex';
+                    
+                    // Update type button icons
+                    const iconVocal = typeBtn.querySelector('.icon-vocal');
+                    const iconInstrumental = typeBtn.querySelector('.icon-instrumental');
+                    
+                    if (this.isVocal) {
+                        iconVocal.style.display = 'block';
+                        iconInstrumental.style.display = 'none';
+                        typeBtn.title = 'Switch to Instrumental';
+                    } else {
+                        iconVocal.style.display = 'none';
+                        iconInstrumental.style.display = 'block';
+                        typeBtn.title = 'Switch to Vocal';
+                    }
+                }
+            }
+
+            setMasterVolume(vol) {
+                this.volume.master = Math.max(0, Math.min(1, vol));
+            }
+        }
+
+        // Initialize sound manager
+        const soundManager = new MenuSoundManager();
+
+        // ============================================
+        // MENU INTERACTIONS
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.menu-button');
+            
+            // Initialize sound on first user interaction
+            let soundInitialized = false;
+            const initSound = () => {
+                if (!soundInitialized) {
+                    soundManager.init();
+                    soundInitialized = true;
+                    
+                    // Start background music with fade-in after short delay
+                    setTimeout(() => {
+                        soundManager.playBackgroundMusic();
+                        soundManager.updateMusicControls(); // Show type button
+                    }, 300);
+                }
+            };
+
+            // Init only on real click (not mousemove - browser policy)
+            document.addEventListener('click', initSound, { once: true });
+            
+            // Scroll-based button appearance
+            const observerOptions = {
+                root: null,
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const buttonObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all buttons and make first few immediately visible
+            buttons.forEach((button, index) => {
+                buttonObserver.observe(button);
+                
+                // Make first 3 buttons visible immediately with stagger
+                if (index < 3) {
+                    setTimeout(() => {
+                        button.classList.add('visible');
+                    }, index * 150);
+                }
+            });
+            
+            // Button hover sound and preload
+            buttons.forEach((button, index) => {
+                // Removed stagger animation - now using scroll-based visibility
+                
+                button.addEventListener('mouseenter', function() {
+                    // Play hover sound
+                    soundManager.playHoverSound();
+                    
+                    // Preload target page
+                    const href = this.getAttribute('href');
+                    if (href && !href.startsWith('#')) {
+                        const link = document.createElement('link');
+                        link.rel = 'prefetch';
+                        link.href = href;
+                        document.head.appendChild(link);
+                    }
+                });
+                
+                button.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    // Only delay navigation for real links (not #)
+                    if (href && !href.startsWith('#')) {
+                        e.preventDefault();
+                        
+                        // Play click sound
+                        soundManager.playClickSound();
+                        
+                        // Fade out music
+                        soundManager.fadeOutMusic(800);
+                        
+                        // Click animation
+                        this.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 150);
+                        
+                        // Navigate after fade-out and click sound
+                        setTimeout(() => {
+                            window.location.href = href;
+                        }, 900);
+                    } else {
+                        // For # links, just play sound and animate
+                        soundManager.playClickSound();
+                        this.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 150);
+                    }
+                });
+            });
+
+            // Keyboard Navigation
+            let selectedIndex = 0;
+            const primaryButtons = document.querySelectorAll('.menu-button.primary');
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    
+                    if (e.key === 'ArrowDown') {
+                        selectedIndex = (selectedIndex + 1) % primaryButtons.length;
+                    } else {
+                        selectedIndex = (selectedIndex - 1 + primaryButtons.length) % primaryButtons.length;
+                    }
+                    
+                    primaryButtons[selectedIndex].focus();
+                    soundManager.playSelectSound();
+                }
+                
+                if (e.key === 'Enter' && document.activeElement.classList.contains('menu-button')) {
+                    soundManager.playClickSound();
+                    document.activeElement.click();
+                }
+                
+                if (e.key === 'Escape') {
+                    soundManager.playHoverSound();
+                    console.log('ESC - Return to previous menu');
+                }
+            });
+
+            // Gamepad Support for VR
+            let gamepadIndex = null;
+            
+            window.addEventListener('gamepadconnected', (e) => {
+                console.log('🎮 Gamepad connected:', e.gamepad.id);
+                gamepadIndex = e.gamepad.index;
+                gamepadLoop();
+            });
+            
+            window.addEventListener('gamepaddisconnected', (e) => {
+                console.log('🎮 Gamepad disconnected');
+                gamepadIndex = null;
+            });
+            
+            function gamepadLoop() {
+                if (gamepadIndex === null) return;
+                
+                const gamepad = navigator.getGamepads()[gamepadIndex];
+                if (!gamepad) return;
+                
+                // D-pad or stick navigation
+                if (gamepad.buttons[12]?.pressed) { // D-pad up
+                    selectedIndex = (selectedIndex - 1 + primaryButtons.length) % primaryButtons.length;
+                    primaryButtons[selectedIndex].focus();
+                    soundManager.playSelectSound();
+                }
+                if (gamepad.buttons[13]?.pressed) { // D-pad down
+                    selectedIndex = (selectedIndex + 1) % primaryButtons.length;
+                    primaryButtons[selectedIndex].focus();
+                    soundManager.playSelectSound();
+                }
+                if (gamepad.buttons[0]?.pressed) { // A button
+                    soundManager.playClickSound();
+                    primaryButtons[selectedIndex]?.click();
+                }
+                
+                requestAnimationFrame(gamepadLoop);
+            }
+
+            // Parallax effect on mouse move
+            document.addEventListener('mousemove', function(e) {
+                const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+                const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+                
+                const title = document.querySelector('.game-title');
+                if (title) {
+                    title.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                }
+            });
+
+            // Background image fade-in
+            const bgImage = document.querySelector('.bg-video');
+            if (bgImage) {
+                bgImage.style.opacity = '0';
+                bgImage.addEventListener('load', function() {
+                    this.style.transition = 'opacity 1s ease';
+                    this.style.opacity = '0.3';
+                });
+            }
+
+            // Music Control Buttons
+            const musicMuteBtn = document.getElementById('musicMuteBtn');
+            const musicTypeBtn = document.getElementById('musicTypeBtn');
+            
+            if (musicMuteBtn) {
+                musicMuteBtn.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent triggering initSound
+                    soundManager.playClickSound();
+                    soundManager.toggleMute();
+                });
+                
+                musicMuteBtn.addEventListener('mouseenter', function() {
+                    soundManager.playHoverSound();
+                });
+            }
+            
+            if (musicTypeBtn) {
+                musicTypeBtn.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent triggering initSound
+                    soundManager.playClickSound();
+                    soundManager.switchMusicType();
+                });
+                
+                musicTypeBtn.addEventListener('mouseenter', function() {
+                    soundManager.playHoverSound();
+                });
+            }
+
+            // Developer Links
+            const developerLinks = document.querySelectorAll('.developer');
+            developerLinks.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    soundManager.playHoverSound();
+                });
+                
+                link.addEventListener('click', function() {
+                    soundManager.playClickSound();
+                });
+            });
+
+            // GitHub Link
+            const githubLink = document.querySelector('.github-link');
+            if (githubLink) {
+                githubLink.addEventListener('mouseenter', function() {
+                    soundManager.playHoverSound();
+                });
+                
+                githubLink.addEventListener('click', function() {
+                    soundManager.playClickSound();
+                });
+            }
+
+            console.log('🎮 BleatchVR Menu loaded - Ready for VR!');
+        });
+
+        // Performance: Reduce animations on low-end devices
+        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+            document.documentElement.style.setProperty('--animation-speed', '0.5');
+        }
+    </script>
+</body>
+</html>
