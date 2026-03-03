@@ -1,3 +1,5 @@
+// KI - generated
+
 // Custom locomotion component:
 // - reads right thumbstick input
 // - reduces movement to 4 directions only
@@ -75,30 +77,30 @@ AFRAME.registerComponent('right-thumbstick-move', {
 		this.quantizeTo4Directions(x, y);
 	},
 
-	tick: function (time, deltaTime) {
-		// Per-frame movement integration.
-		if (!deltaTime) return;
-		if (this.moveX === 0 && this.moveZ === 0) return;
-
-		const cameraEl = this.data.camera;
-		if (!cameraEl) return;
-
-		// Convert delta time from ms to seconds.
-		const dt = deltaTime / 1000;
-		// Use camera yaw so movement follows view direction.
-		const yaw = cameraEl.object3D.rotation.y;
-
-		// Build horizontal forward/right vectors from current yaw.
-		const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(new THREE.Vector3(0, 1, 0), yaw);
-		const right = new THREE.Vector3(1, 0, 0).applyAxisAngle(new THREE.Vector3(0, 1, 0), yaw);
-
-		const movement = new THREE.Vector3();
-		movement.addScaledVector(right, this.moveX);
-		movement.addScaledVector(forward, this.moveZ);
-		// Keep speed constant for the active direction.
-		movement.normalize().multiplyScalar(this.data.speed * dt);
-
-		// Move the rig in world space.
-		this.el.object3D.position.add(movement);
-	}
+	//tick: function (time, deltaTime) {
+	//	// Per-frame movement integration.
+	//	if (!deltaTime) return;
+	//	if (this.moveX === 0 && this.moveZ === 0) return;
+//
+	//	const cameraEl = this.data.camera;
+	//	if (!cameraEl) return;
+//
+	//	// Convert delta time from ms to seconds.
+	//	const dt = deltaTime / 1000;
+	//	// Use camera yaw so movement follows view direction.
+	//	const yaw = cameraEl.object3D.rotation.y;
+//
+	//	// Build horizontal forward/right vectors from current yaw.
+	//	const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(new THREE.Vector3(0, 1, 0), yaw);
+	//	const right = new THREE.Vector3(1, 0, 0).applyAxisAngle(new THREE.Vector3(0, 1, 0), yaw);
+//
+	//	const movement = new THREE.Vector3();
+	//	movement.addScaledVector(right, this.moveX);
+	//	movement.addScaledVector(forward, this.moveZ);
+	//	// Keep speed constant for the active direction.
+	//	movement.normalize().multiplyScalar(this.data.speed * dt);
+//
+	//	// Move the rig in world space.
+	//	this.el.object3D.position.add(movement);
+	//}
 });

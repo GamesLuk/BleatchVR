@@ -1,22 +1,45 @@
 # BleatchVR
 
-## Lootsystem (old)
-Randomly placed [Lootboxes](https://www.fab.com/listings/25fcaec7-bcfe-4c8d-801e-df004ae2c958). Player can open boxes by attacking them. 1/3 chance for each health, experience and food item. Then 4/5 chance for normal item or 1/5 for special item (is way more powerfull).
+Potenzielles Problem mit Lootboxen von anderen Spielern. Lootbox id Zusammensetzung: `"lootbox" + <num> + <username>`
 
-  **Health:**  
-    - [Bandages](https://www.fab.com/listings/1647b37a-0599-4166-add6-564ed703d140)  
-    - [Medi-Kit](https://www.fab.com/listings/c3e645d4-e2d9-4941-a362-f33da1be2584)  
+Hitkonezpt:
 
-  **Experience:**  
-    - [Paper](https://www.fab.com/listings/ee0bbb45-1b8f-4dbf-bcce-46e5f64d633d)    
-    - [Book](https://www.fab.com/listings/1b896bd3-059f-4829-a188-637b20631c59)  
+    Player1 hittet Lootbox von Player2:
 
-  **Energy:**  
-    - [Apple](https://www.fab.com/listings/c40aab2b-3767-4055-94bf-4283022516f9)  
-    - [Lamb Ribs](https://www.fab.com/listings/dc2b6a23-aa22-41a9-b5ea-9639e8837488)  
+        Player1 (Erkennt Collision von lokal Weapon mit networked Lootbox):
 
-## Credits
-<b>hover.mp3:</b> Sound Effect by <a href="https://pixabay.com/users/lesiakower-25701529/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=399749">Lesiakower</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=399749">Pixabay</a>
+        Player2 (Erkennt Collision von networked Weapon mit lokal Lootbox):
+
+    Player1 hittet Player2:
+
+        Player1 (Erkennt Collision von lokal Weapon mit networked Player):
+
+            Wenn Player1 noch genug Energy,
+            dann Energy = Energy - Abzug,
+            sonst return
+
+            Spielt Sound
+
+            Wenn Player2 jetzt tot,
+            dann verarbeite das
+
+        Player2 (Erkennt Collision von networked Weapon mit lokal Player):
+
+            Wenn Player2 noch genug Energy,
+            dann Health = Health - Abzug,
+            sonst return
+
+            Spielt Sound
+
+    ==> Nur Sync von Basic-Spielerdaten, aber keine Events. Latenz (evt auch künstlich im Code) sorgt dafür, dass alle beteiligten noch den Zustand vor dem Hit haben sollten.
 
 
-<b>click.mp3:</b> Sound Effect by <a href="https://pixabay.com/users/666herohero-25759907/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=21156">666HeroHero</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=21156">Pixabay</a>
+Was brauchen wir am Ende:
+
+    - Networked Lootboxen, Spieler (inkl. Waffen usw.)
+    - Networked Stats (Health, Energy, onCooldown)
+    - Welt
+    - Physics = Movement    !! Testen, evt Movement durch die Brillen selbst
+    - hit-system auf allen Seiten, so wie oben erklärt
+    - hud für alle Spieler lokal auf Basis von Networked Stats
+    - Sounds lokal auf Basis von hit-system

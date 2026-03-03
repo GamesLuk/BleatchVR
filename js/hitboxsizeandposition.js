@@ -38,7 +38,7 @@ AFRAME.registerComponent('auto-fit-hitbox', {
 		const localCenter = hitboxParent ? hitboxParent.worldToLocal(center.clone()) : center;
 
 		// Hitbox auf Modellgröße setzen.
-		this.data.hitbox.setAttribute('width', Math.max(0.01, size.x));
+		this.data.hitbox.setAttribute('width', Math.max(0.01, size.x));	// Min 0.01, damit es nicht komplett verschwindet
 		this.data.hitbox.setAttribute('height', Math.max(0.01, size.y));
 		this.data.hitbox.setAttribute('depth', Math.max(0.01, size.z));
 		this.data.hitbox.setAttribute('position', `${localCenter.x} ${localCenter.y} ${localCenter.z}`);
