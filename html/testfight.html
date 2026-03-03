@@ -30,8 +30,7 @@
             <a-entity
                 id="playerRig"
                 position="0 1.6 -2.6"
-                right-thumbstick-move="controller: #weapon; camera: #playerCamera; speed: 2.8; deadzone: 0.2"
-            >
+                right-thumbstick-move="controller: #weapon; camera: #playerCamera; speed: 2.8; deadzone: 0.2">
                 <!-- Camera + fixed HUD in view -->
                 <a-camera id="playerCamera" position="0 0 0" look-controls="pointerLockEnabled: true">
                     <a-entity id="hud-bars" visible="true">
@@ -47,8 +46,7 @@
                 <!-- Pico Controller (Gamepad API) -->
                 <a-entity
                     id="shield"
-                    tracked-controls="hand: left; controller: 0; idPrefix: PICO; autoHide: false; space: grip"
-                >
+                    tracked-controls="hand: left; controller: 0; idPrefix: PICO; autoHide: false; space: grip">
                     <a-gltf-model
                         position="-0.1 0 0.42"
                         rotation="0 -90 90"
@@ -81,8 +79,8 @@
                 gltf-model="#giraffeModel"
                 position="0 0 -4"
                 scale="12.0 12.0 12.0"
-                auto-fit-hitbox="hitbox: #giraffeHitbox; healthText: #giraffeHealth; textOffset: 0.4"
-            ></a-entity>
+                auto-fit-hitbox="hitbox: #giraffeHitbox; healthText: #giraffeHealth; textOffset: 0.4">
+            </a-entity>
 
             <a-box id="giraffeHitbox" position="0 1.8 -4" width="1.0" height="3.6" depth="1.4" material="wireframe: true; color: #00ff00" visible="true"></a-box>
             <a-entity id="giraffeHealth" position="0 2.4 -5" text="value: HP: 100; align: center; color: #ff3333; width: 8"></a-entity>

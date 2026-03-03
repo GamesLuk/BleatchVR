@@ -4,8 +4,8 @@ import { applyHudOverlay } from './hud-overlay.js';
 let defaultWidth = 0.860;						// Total width of the bar texture
 let defaultHight = 0.081;						// Total height of the bar texture
 
-let defaultPositionX = 2.4;					// Default X position of the bar when health is 100%
-let defaultPositionY = -1;					   	// Default Y position of the first bar
+let defaultPositionX = 	0;					// Default X position of the bar when health is 100%
+let defaultPositionY = -0.8;					   	// Default Y position of the first bar
 let defaultPositionZ = -2;						// Default Z position of the bar
 
 let barSpacingY = 0.125;						// Vertical spacing between bars
