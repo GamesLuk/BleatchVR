@@ -17,6 +17,8 @@ let currentHotbarSlot = 0;					    // Currently selected hotbar item (0-4)
 const defaultSelectorPositionX = -0.395;        // Default X position of the selector relative to the first slot
 
 const selectorSpacingX = 0.1975                 // Horizontal spacing between slots for the selector
+const slotSwitchCooldownMs = 250;              // Cooldown for joystick slot switching
+let lastSlotSwitchAt = 0;
 
 
 AFRAME.registerComponent('hud-hotbar-slot', {
@@ -30,6 +32,40 @@ AFRAME.registerComponent('hud-hotbar-slot', {
 		this.el.setAttribute("repeat", "1 1");
 		this.el.setAttribute("position", `${defaultPositionX + (this.data.num * slotSpacingX)} ${defaultPositionY} ${defaultPositionZ}`);
 	}
+});
+
+AFRAME.registerComponent('controller-input', {
+    init: function () {
+        const controller = this.el;
+        
+        controller.addEventListener('buttondown', (event) => {
+            if (event.detail.id === 2) {
+                Player.setHealth(50);
+            }
+        });
+
+        controller.addEventListener('axismove', (event) => {
+              const axes = event.detail.axis;   // Array mit Stick-Werten
+              const x = axes[2] ?? axes[0];     // je nach Controller-Mapping
+              const y = axes[3] ?? axes[1];
+
+              const deadzone = 0.35;
+              if (Math.abs(x) < deadzone && Math.abs(y) < deadzone) return;
+
+              const now = Date.now();
+              if (now - lastSlotSwitchAt < slotSwitchCooldownMs) return;
+
+              // hier deine Aktion bei Joystick-Änderung
+              // z.B. Slot wechseln, Bewegung, UI steuern
+              if (x > 0 && currentHotbarSlot < maxHotbarSlots - 1) {
+                  setCurrentHotbarSlot(currentHotbarSlot + 1);
+                  lastSlotSwitchAt = now;
+              } else if (x < 0 && currentHotbarSlot > 0) {
+                  setCurrentHotbarSlot(currentHotbarSlot - 1);
+                  lastSlotSwitchAt = now;
+              }
+            });
+    }
 });
 
 export function useCurrentHotbarItem() {

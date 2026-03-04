@@ -46,7 +46,7 @@ export function updateHudBars() {
 	const healthBarPositionX = defaultPositionX - (defaultWidth - newWidth) / 2;
 	healthBar.setAttribute("position", `${healthBarPositionX} ${currentHealthBarPosition.y} ${currentHealthBarPosition.z}`);
 
-	requestAnimationFrame(() => applyHudOverlay(healthBar));
+	requestAnimationFrame(() => applyHudOverlay(healthBar, 101));
 
 
 	// Update experience bar
@@ -62,7 +62,7 @@ export function updateHudBars() {
 	const experienceBarPositionX = defaultPositionX - (defaultWidth - newExperienceWidth) / 2;
 	experienceBar.setAttribute("position", `${experienceBarPositionX} ${currentExperienceBarPosition.y} ${currentExperienceBarPosition.z}`);
 
-	requestAnimationFrame(() => applyHudOverlay(experienceBar));
+	requestAnimationFrame(() => applyHudOverlay(experienceBar, 101));
 
 
 	// Update energy bar
@@ -78,6 +78,6 @@ export function updateHudBars() {
 	const energyBarPositionX = defaultPositionX - (defaultWidth - newEnergyWidth) / 2;
 	energyBar.setAttribute("position", `${energyBarPositionX} ${currentEnergyBarPosition.y} ${currentEnergyBarPosition.z}`);
 
-	requestAnimationFrame(() => applyHudOverlay(energyBar));
+	requestAnimationFrame(() => applyHudOverlay(energyBar, 101));
 
 }
