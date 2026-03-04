@@ -4,6 +4,7 @@ import * as HotBar from "./hud/hud-hotbar.js";
 import { updateHudBars } from "./hud/hud-bars.js";
 import "./physics.js";
 import * as LootBox from "./lootbox.js";
+import "./movemtn.js";
 
 // Global initialization for inline html scripts
 window.updateHudBars = updateHudBars;
