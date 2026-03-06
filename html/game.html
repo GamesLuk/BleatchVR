@@ -1,41 +1,117 @@
 <html>
-  <head>
-    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
-  </head>
-  <body>
-    <a-scene webxr="requiredFeatures: local-floor">
-      <!-- Pico Controller (Gamepad API) -->
-      <a-entity id="shield"
-                tracked-controls="hand: left; controller: 0; idPrefix: PICO; autoHide: false; space: grip">
-        <a-gltf-model position="-0.1 0 0.42" rotation="0 -90 90" scale="0.5 0.5 0.5" src="/files/models/shield.glb"></a-gltf-model>
-      </a-entity>
-      <a-entity id="weapon"
-                tracked-controls="hand: right; controller: 1; idPrefix: PICO; autoHide: false; space: grip"
-                raycaster="showLine: true; far: 10; lineColor: #24CAFF"
-                cursor="rayOrigin: entity">
-        <a-gltf-model position="0.622 0 -0.3" rotation="0 -90 90" src="/files/models/weapon/Long_Ax_1.gltf"></a-gltf-model>
-      </a-entity>
+	<head>
+		<script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.min.js"></script>
+    <script src="https://unpkg.com/networked-aframe@^0.14.0/dist/networked-aframe.min.js"></script>
+		<script type="module" src="/files/js/main.js"></script>
+	</head>
+	<body>
+		<a-scene id="main-scene">
+			<a-assets>
+				<!-- HUD Bar Images -->
+				<img id="empty-bar" src="/files/images/hud/bars/emptyBar.png">
+				<img id="full-health-bar" src="/files/images/hud/bars/fullBarHealth.png">
+				<img id="full-energy-bar" src="/files/images/hud/bars/fullBarEnergy.png">
+				<img id="full-experience-bar" src="/files/images/hud/bars/fullBarExperience.png">
+				
+				<!-- HUD Hotbar Image -->
+				<img id="hotbar" src="/files/images/hud/hotbar.png">
+				<img id="selector" src="/files/images/hud/selector.png">
+				
+				<!-- Item Images -->
+				<img id="empty" src="/files/images/items/empty.png">
+				<img id="bandages" src="/files/images/items/bandages.png">
+				<img id="medic-kit" src="/files/images/items/medic-kit.png">
+				<img id="scroll" src="/files/images/items/scroll.png">
+				<img id="book" src="/files/images/items/book.png">
+				<img id="apple" src="/files/images/items/apple.png">
+				<img id="bread" src="/files/images/items/bread.png">
 
-      <!-- Beispiel-Interaktion -->
-      <a-entity camera look-controls wasd-controls obb-collider position="0 1.6 0"></a-entity>
-      <a-box id="target" class="clickable" obb-collider position="0 1.5 -1.2"></a-box>
+				<!-- Models -->
+				<a-asset-item id="shield-model" src="/files/models/shield.glb"></a-asset-item>
+				<a-asset-item id="weapon-model" src="/files/models/weapon/Long_Ax_1.gltf"></a-asset-item>
+				<a-asset-item id="lootbox-model" src="/files/models/lootbox.glb"></a-asset-item>
 
-      <a-box position="3 1.5 -1.2" obb-collider rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
-    </a-scene>
+        <!-- Avatar Template for Networked-Aframe -->
+        <template id="player-template">
+					<a-sphere id="networked-player" player-stats color="#5985ff" radius="0.5" collision-box="width: 0.7; height: 0.7; depth: 0.7" position="0 0 0"></a-sphere>
+        </template>
 
-    <script>
-      const target = document.querySelector('#target');
-      const weapon = document.querySelector('#weapon');
+			</a-assets>
 
-      // Trigger/Select-Event vom Controller
-      const triggerAction = () => target.setAttribute('color', 'blue');
-      const undoAction = () => target.setAttribute('color', 'green');
-      target.addEventListener('obbcollisionstarted', triggerAction);
-      target.addEventListener('obbcollisionended', undoAction);
-    </script>
-  </body>
+			<!-- Pico Controller (Gamepad API) -->
+			<a-entity id="shield" listener controller-input tracked-controls="hand: left; controller: 0; idPrefix: PICO; autoHide: false; space: grip">
+				<a-gltf-model position="-0.05 0 0.3" rotation="0 -90 90" scale="0.3 0.3 0.3" src="#shield-model"></a-gltf-model>
+				<a-cylinder position="0 0 -0.0" rotation="90 0 0" radius="0.02" height="0.04" color="#FFCAFF"></a-cylinder>
+			</a-entity>
+			<a-entity id="weapon"
+					tracked-controls="hand: right; controller: 1; idPrefix: PICO; autoHide: false; space: grip"
+					raycaster="showLine: true; far: 10; lineColor: #24CAFF"
+					cursor="rayOrigin: entity">
+				<a-cylinder position="0 0 -0.0" rotation="90 0 0" radius="0.02" height="0.04" color="#24CAFF"></a-cylinder>
+				<a-gltf-model position="0.43 0 -0.3" rotation="0 -90 90" src="#weapon-model" scale="0.7 0.7 0.7"></a-gltf-model>
+			</a-entity>
+
+			<!-- Player Entity -->
+			<a-entity id="local-player" 
+                networked="template:#player-template;attachTemplateToLocal:false;" 
+                player-stats
+                player-controller="speed: 15; radius: 0.25"
+                position="0 1.6 0">
+        <a-camera look-controls="pointerLockEnabled: true" wasd-controls="enabled: false" position="0 0 0">
+
+					<!-- HUD Bars -->
+					<a-entity id="hud-bars" visible="true">
+						<a-image src="#empty-bar" hud-bar="num: 0"></a-image>
+						<a-image id="health-bar" src="#full-health-bar" hud-bar="num: 0"></a-image>
+
+						<a-image src="#empty-bar" hud-bar="num: 1"></a-image>
+						<a-image id="experience-bar" src="#full-experience-bar" hud-bar="num: 1"></a-image>
+
+						<a-image src="#empty-bar" hud-bar="num: 2"></a-image>
+						<a-image id="energy-bar" src="#full-energy-bar" hud-bar="num: 2"></a-image>
+					</a-entity>
+
+					<!-- HUD Hotbar -->
+					<a-image id="hud-hotbar" src="#hotbar" hud-overlay position="0 -1.3 -2" width="1.008" height="0.216" rotation="-20 0 0" repeat="1 1">
+						<a-image id="hotbar-selector" src="#selector" hud-overlay="renderOrder: 101" position="0 0 0" width="0.216" height="0.216"></a-image>
+						<a-image id="hotbar-slot0" src="#apple" hud-hotbar-slot="num: 0"></a-image>
+						<a-image id="hotbar-slot1" src="#bread" hud-hotbar-slot="num: 1"></a-image>
+						<a-image id="hotbar-slot2" src="#bandages" hud-hotbar-slot="num: 2"></a-image>
+						<a-image id="hotbar-slot3" src="#scroll" hud-hotbar-slot="num: 3"></a-image>
+						<a-image id="hotbar-slot4" src="#book" hud-hotbar-slot="num: 4"></a-image>
+					</a-image>
+				
+				</a-camera>
+
+			</a-entity>
+
+			<!-- World Entities -->
+			<a-box id="target" class="clickable" obb-collider position="0 1.5 -1.2"></a-box>
+
+			<a-gltf-model id="lootbox0" position="2 0 -2" lootbox></a-gltf-model>
+			<a-gltf-model id="lootbox1" position="3 0 -2" lootbox></a-gltf-model>
+			<a-gltf-model id="lootbox2" position="4 0 -2" lootbox></a-gltf-model>
+			<a-gltf-model id="lootbox3" position="5 0 -2" lootbox></a-gltf-model>
+			<a-gltf-model id="lootbox4" position="6 0 -2" lootbox></a-gltf-model>
+
+			<a-box position="3 1.5 -1.2" obb-collider rotation="0 45 0" color="#4CC3D9"></a-box>
+			<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+			<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+			<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+			<a-sky color="#ECECEC"></a-sky>
+		</a-scene>
+
+		<script>
+
+		  	// Set networked-scene BEFORE scene initialization
+      		const queryString = window.location.search;
+      		const urlParams = new URLSearchParams(queryString);
+      		const lobby = urlParams.get('lobby') || 'default';
+
+      		const scene = document.querySelector('a-scene');
+      		scene.setAttribute('networked-scene', `room: ${lobby}; adapter: socketio; serverURL: /;`);
+			
+		</script>
+	</body>
 </html>

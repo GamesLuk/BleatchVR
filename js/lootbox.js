@@ -19,8 +19,9 @@ AFRAME.registerComponent('lootbox', {
 	},
 	init: function () {
 		this.el.setAttribute("src", "#lootbox-model");
-		this.el.setAttribute("scale", "0.4 0.4 0.4");
+		this.el.setAttribute("scale", "0.2 0.2 0.2");
         this.el.setAttribute("visible", "false");
+        this.el.setAttribute("collision-box", "width: 1; height: 0.8; depth: 1");
         this.isSpawned = false;  // Track if this lootbox has been spawned
         this.cooldownEndTime = 0; // Timestamp (in ms) when cooldown ends
 	},

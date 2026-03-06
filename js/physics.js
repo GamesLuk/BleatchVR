@@ -1,3 +1,5 @@
+import { getOwningPlayerId } from "./network.js";
+import { getSpeed } from "./player.js";
 
 const PHYSICS_DEBUG = true;  // Setze auf false um Wireframes zu deaktivieren
 
@@ -60,7 +62,6 @@ AFRAME.registerComponent('collision-box', {
 // Player Controller with Collision
 AFRAME.registerComponent('player-controller', {
     schema: {
-        speed: {type: 'number', default: 3},
         radius: {type: 'number', default: 0.3}
     },
 
@@ -81,11 +82,12 @@ AFRAME.registerComponent('player-controller', {
     tick: function(time, deltaTime) {
         if (deltaTime === 0) return;
         
-        const dt = deltaTime / 1000;
-        const speed = this.data.speed;
         const el = this.el;
         const pos = el.object3D.position;
-        
+        const dt = deltaTime / 1000;
+        const speed = getSpeed(getOwningPlayerId(el));
+
+
         // Get camera rotation
         const cameraEl = el.querySelector('[camera]');
         if (!cameraEl) return;
