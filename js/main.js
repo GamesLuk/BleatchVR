@@ -5,11 +5,7 @@ import { updateHudBars } from "./hud/hud-bars.js";
 import "./physics.js";
 import * as LootBox from "./lootbox.js";
 import "./movemtn.js";
-import "./damage.js";
-import "./testfight-energy.js";
 import * as Network from "./network.js";
-
-
 
 // Global initialization for inline html scripts
 window.updateHudBars = updateHudBars;

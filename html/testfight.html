@@ -6,13 +6,14 @@
 		<title>BleatchVR Test Fight</title>
 		<!-- Core A-Frame + project modules -->
 		<script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.min.js"></script>
-    <script src="https://unpkg.com/networked-aframe@^0.14.0/dist/networked-aframe.min.js"></script>
         <script type="module" src="/files/js/main.js"></script>
+        <script src="../js/hitboxsizeandposition.js"></script>
+        <script src="../js/damage.js"></script>
+        <script src="../js/testfight-energy.js"></script>
 	</head>
 	<body>
         <!-- Scene with hit damage + energy handling -->
-    <a-scene webxr="requiredFeatures: local-floor" fight-energy-system>
+        <a-scene webxr="requiredFeatures: local-floor" simple-hit-damage="weapon: #weaponHitbox; target: #giraffeHitbox; healthText: #giraffeHealth" fight-energy-system>
 			<a-assets>
                 <!-- HUD bar textures -->
                 <img id="empty-bar" src="/files/images/hud/bars/emptyBar.png">
@@ -22,23 +23,15 @@
 
 				<!-- Enemy model -->
 				<a-asset-item id="giraffeModel" src="/files/models/toy_giraffe_ujpheaova_low.glb"></a-asset-item>
-
-        <!-- Netzwerk-Template für main.js / player.js Initialisierung -->
-        <template id="player-template">
-            <a-sphere player-stats radius="0.001" visible="false"></a-sphere>
-        </template>
 			</a-assets>
 
             <!-- Player rig with thumbstick locomotion -->
             <a-entity
-                id="local-player"
-                networked="template:#player-template;attachTemplateToLocal:false;"
-                player-stats
+                id="playerRig"
                 position="0 1.6 -2.6"
-                player-controller="radius: 0.25"
                 right-thumbstick-move="controller: #weapon; camera: #playerCamera; speed: 2.8; deadzone: 0.2">
                 <!-- Camera + fixed HUD in view -->
-                <a-camera id="playerCamera" position="0 0 0" look-controls="pointerLockEnabled: true" wasd-controls="enabled: true">
+                <a-camera id="playerCamera" position="0 0 0" look-controls="pointerLockEnabled: true">
                     <a-entity id="hud-bars" visible="true">
                         <a-image src="#empty-bar" hud-bar="num: 0"></a-image>
                         <a-image id="health-bar" src="#full-health-bar" hud-bar="num: 0"></a-image>
@@ -67,26 +60,28 @@
                     raycaster="showLine: true; far: 10; lineColor: #24CAFF"
                     cursor="rayOrigin: entity"
                 >
+                    <!-- Weapon hitbox (auto-fitted to model) -->
+                    <a-box id="weaponHitbox" position="0.622 0 -0.3" width="0.35" height="1.2" depth="0.35" material="wireframe: true; color: #00ffff" visible="true"></a-box>
                     <a-gltf-model
                         id="weaponModel"
                         position="0.622 0 -0.3"
                         rotation="0 -90 90"
                         src="/files/models/weapon/Long_Ax_1.gltf"
-                        obb-collider
+                        auto-fit-hitbox="hitbox: #weaponHitbox"
                     ></a-gltf-model>
                 </a-entity>
             </a-entity>
 
-            <!-- Giraffe enemy + Object-Collision + health text -->
+            <!-- Giraffe enemy + auto-fitted hitbox + health text -->
             <a-entity
                 id="giraffeRoot"
                 gltf-model="#giraffeModel"
                 position="0 0 -4"
                 scale="12.0 12.0 12.0"
-                obb-collider
-                simple-hit-damage="weapon: #weaponModel; healthText: #giraffeHealth; damage: 20; maxHp: 100">
+                auto-fit-hitbox="hitbox: #giraffeHitbox; healthText: #giraffeHealth; textOffset: 0.4">
             </a-entity>
 
+            <a-box id="giraffeHitbox" position="0 1.8 -4" width="1.0" height="3.6" depth="1.4" material="wireframe: true; color: #00ff00" visible="true"></a-box>
             <a-entity id="giraffeHealth" position="0 2.4 -5" text="value: HP: 100; align: center; color: #ff3333; width: 8"></a-entity>
 
             <!-- Simple world -->
