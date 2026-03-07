@@ -6,14 +6,25 @@
 		<title>BleatchVR Test Fight</title>
 		<!-- Core A-Frame + project modules -->
 		<script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+		<!-- NAF shim for standalone testing (no multiplayer server needed) -->
+		<script>
+			window.NAF = {
+				schemas: { add: function() {} },
+				connection: { adapter: { socket: null } }
+			};
+			AFRAME.registerComponent('networked', {
+				schema: {
+					template: { type: 'string', default: '' },
+					attachTemplateToLocal: { type: 'boolean', default: true },
+					networkId: { type: 'string', default: 'local' }
+				}
+			});
+		</script>
         <script type="module" src="/files/js/main.js"></script>
-        <script src="../js/hitboxsizeandposition.js"></script>
-        <script src="../js/damage.js"></script>
-        <script src="../js/testfight-energy.js"></script>
+    
 	</head>
 	<body>
-        <!-- Scene with hit damage + energy handling -->
-        <a-scene webxr="requiredFeatures: local-floor" simple-hit-damage="weapon: #weaponHitbox; target: #giraffeHitbox; healthText: #giraffeHealth" fight-energy-system>
+        <a-scene webxr="requiredFeatures: local-floor">
 			<a-assets>
                 <!-- HUD bar textures -->
                 <img id="empty-bar" src="/files/images/hud/bars/emptyBar.png">
@@ -27,7 +38,9 @@
 
             <!-- Player rig with thumbstick locomotion -->
             <a-entity
-                id="playerRig"
+                id="local-player"
+                networked="networkId: local"
+                player-stats
                 position="0 1.6 -2.6"
                 right-thumbstick-move="controller: #weapon; camera: #playerCamera; speed: 2.8; deadzone: 0.2">
                 <!-- Camera + fixed HUD in view -->
@@ -57,32 +70,29 @@
                 <a-entity
                     id="weapon"
                     tracked-controls="hand: right; controller: 1; idPrefix: PICO; autoHide: false; space: grip"
-                    raycaster="showLine: true; far: 10; lineColor: #24CAFF"
+                    raycaster="showLine: false; far: 10; lineColor: #24CAFF"
                     cursor="rayOrigin: entity"
                 >
-                    <!-- Weapon hitbox (auto-fitted to model) -->
-                    <a-box id="weaponHitbox" position="0.622 0 -0.3" width="0.35" height="1.2" depth="0.35" material="wireframe: true; color: #00ffff" visible="true"></a-box>
                     <a-gltf-model
                         id="weaponModel"
-                        position="0.622 0 -0.3"
+                        position="0.2 0 -0.3"
                         rotation="0 -90 90"
                         src="/files/models/weapon/Long_Ax_1.gltf"
-                        auto-fit-hitbox="hitbox: #weaponHitbox"
                     ></a-gltf-model>
                 </a-entity>
             </a-entity>
 
-            <!-- Giraffe enemy + auto-fitted hitbox + health text -->
+            <!-- Giraffe enemy with OBB collision + health tracking -->
             <a-entity
                 id="giraffeRoot"
                 gltf-model="#giraffeModel"
                 position="0 0 -4"
                 scale="12.0 12.0 12.0"
-                auto-fit-hitbox="hitbox: #giraffeHitbox; healthText: #giraffeHealth; textOffset: 0.4">
+                weapon-target="type: enemy; weapon: #weapon"
+                enemy-health="hp: 100; healthText: #giraffeHealth">
             </a-entity>
 
-            <a-box id="giraffeHitbox" position="0 1.8 -4" width="1.0" height="3.6" depth="1.4" material="wireframe: true; color: #00ff00" visible="true"></a-box>
-            <a-entity id="giraffeHealth" position="0 2.4 -5" text="value: HP: 100; align: center; color: #ff3333; width: 8"></a-entity>
+            <a-entity id="giraffeHealth" position="0 3.8 -4" text="value: HP: 100; align: center; color: #ff3333; width: 8"></a-entity>
 
             <!-- Simple world -->
             <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>

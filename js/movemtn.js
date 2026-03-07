@@ -25,8 +25,7 @@ AFRAME.registerComponent('right-thumbstick-move', {
 		speed: { type: 'number', default: 2.8 },
 		deadzone: { type: 'number', default: 0.2 },
 		axisX: { type: 'number', default: 2 },
-		axisY: { type: 'number', default: 3 },
-		debug: { type: 'boolean', default: true }
+		axisY: { type: 'number', default: 3 }
 	},
 
 	init: function () {
@@ -34,51 +33,18 @@ AFRAME.registerComponent('right-thumbstick-move', {
 		this.moveVector = new THREE.Vector3();
 		this.controllerEl = this.data.controller;
 		this.cameraEl = this.data.camera;
-		this._warned = new Set();
-	},
-
-	logDebug: function (message, extra) {
-		if (!this.data.debug) return;
-		if (typeof extra !== 'undefined') {
-			console.debug('[right-thumbstick-move]', message, extra);
-			return;
-		}
-		console.debug('[right-thumbstick-move]', message);
-	},
-
-	warnOnce: function (key, message) {
-		if (this._warned.has(key)) return;
-		this._warned.add(key);
-		console.warn('[right-thumbstick-move]', message);
 	},
 
 	getResolvedRefs: function () {
 		if (!this.controllerEl) this.controllerEl = document.getElementById('weapon');
-		if (!this.controllerEl) {
-			this.warnOnce('controller-missing', 'Kein Controller gefunden. Erwartet #weapon.');
-		} else {
-			this.logDebug('Controller gefunden', { id: this.controllerEl.id });
-		}
 		if (!this.cameraEl) this.cameraEl = document.getElementById('playerCamera');
 		return { controllerEl: this.controllerEl, cameraEl: this.cameraEl };
 	},
 
 	trackenControlls: function (controllerEl) {
 		const trackedControls = controllerEl && controllerEl.components['tracked-controls'];
-		if (!trackedControls) {
-			this.warnOnce(
-				'tracked-controls-missing',
-				'Keine tracked-controls am #weapon gefunden (Hinweis: korrekt ist tracked-controls, nicht trackenControlls).'
-			);
-			return null;
-		}
-
-		if (!trackedControls.controller) {
-			this.warnOnce('tracked-controller-missing', 'tracked-controls vorhanden, aber kein Controller/Gamepad gebunden.');
-			return null;
-		}
-
-		this.logDebug('tracked-controls abgefragt', { controllerId: controllerEl && controllerEl.id });
+		if (!trackedControls) return null;
+		if (!trackedControls.controller) return null;
 		return trackedControls.controller;
 	},
 
@@ -89,10 +55,7 @@ AFRAME.registerComponent('right-thumbstick-move', {
 	},
 
 	readStickAxes: function (gamepad) {
-		if (!gamepad || !Array.isArray(gamepad.axes)) {
-			this.warnOnce('axes-missing', 'Keine Joystick-Daten gefunden: gamepad.axes fehlt oder ist kein Array.');
-			return null;
-		}
+		if (!gamepad || !Array.isArray(gamepad.axes)) return null;
 
 		const axisPairs = [
 			[this.data.axisX, this.data.axisY],
@@ -117,16 +80,6 @@ AFRAME.registerComponent('right-thumbstick-move', {
 				best = { x, y };
 			}
 		}
-
-		if (!best) {
-			this.warnOnce('axes-values-missing', 'Joystick-Achsen vorhanden, aber keine gültigen X/Y-Werte gefunden.');
-			return null;
-		}
-
-		this.logDebug('Joystick-Daten gelesen', {
-			axesLength: gamepad.axes.length,
-			selectedAxes: best
-		});
 
 		return best;
 	},

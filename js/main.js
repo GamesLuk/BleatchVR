@@ -6,6 +6,7 @@ import "./physics.js";
 import * as LootBox from "./lootbox.js";
 import "./movemtn.js";
 import * as Network from "./network.js";
+import "./hit-system.js"
 
 // Global initialization for inline html scripts
 window.updateHudBars = updateHudBars;
