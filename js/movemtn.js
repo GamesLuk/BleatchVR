@@ -107,6 +107,15 @@ AFRAME.registerComponent('right-thumbstick-move', {
 		this.moveVector.applyAxisAngle(this.up, cameraEl.object3D.rotation.y);
 
 		const step = this.data.speed * (deltaTime / 1000);
-		this.el.object3D.position.addScaledVector(this.moveVector, step);
+		this.moveVector.multiplyScalar(step);
+
+		// Use player-controller's collision system if available (physics.js),
+		// otherwise move freely for scenes without physics
+		const playerController = this.el.components['player-controller'];
+		if (playerController) {
+			playerController.moveWithCollision(this.el.object3D.position, this.moveVector);
+		} else {
+			this.el.object3D.position.add(this.moveVector);
+		}
 	}
 });
