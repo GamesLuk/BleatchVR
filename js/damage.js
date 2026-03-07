@@ -1,22 +1,32 @@
-// Einfache Damage-Komponente:
-// - prüft Hitbox-Kollision zwischen Waffe und Ziel
-// - zieht pro neuem Kontakt einmal 20 HP ab
-// - aktualisiert optional eine Textanzeige
+// Schlanke Damage-Komponente auf Basis von Object-Collision (obb-collider).
+// Die Komponente hängt am Zielobjekt selbst (z. B. giraffeRoot) und reagiert
+// auf Kollisionen mit der konfigurierten Waffe.
 AFRAME.registerComponent('simple-hit-damage', {
 	schema: {
-		// Waffen-Hitbox-Entity
+		// Waffen-Entity mit obb-collider
 		weapon: { type: 'selector' },
-		// Ziel-Hitbox-Entity
-		target: { type: 'selector' },
 		// Optionales Text-Entity für HP-Anzeige
-		healthText: { type: 'selector' }
+		healthText: { type: 'selector' },
+		// Parameter, damit die Komponente universell wiederverwendbar bleibt.
+		damage: { type: 'number', default: 20 },
+		maxHp: { type: 'number', default: 100 }
 	},
 
 	init: function () {
 		// Startwerte
-		this.hp = 100;
-		this.wasColliding = false;
+		this.hp = this.data.maxHp;
+
+		// Event-Handler binden, damit remove() sauber aufräumen kann.
+		this.onCollisionStarted = this.onCollisionStarted.bind(this);
 		this.updateText();
+
+		// OBB-Kollisionen direkt am Zielobjekt abhören.
+		this.el.addEventListener('obbcollisionstarted', this.onCollisionStarted);
+	},
+
+	remove: function () {
+		// Listener beim Entfernen der Komponente aufräumen.
+		this.el.removeEventListener('obbcollisionstarted', this.onCollisionStarted);
 	},
 
 	updateText: function () {
@@ -25,23 +35,15 @@ AFRAME.registerComponent('simple-hit-damage', {
 		this.data.healthText.setAttribute('text', 'value', 'HP: ' + this.hp);
 	},
 
-	tick: function () {
-		// Nur rechnen, wenn beide Hitboxen gesetzt sind
-		if (!this.data.weapon || !this.data.target) return;
+	onCollisionStarted: function (event) {
+		if (!this.data.weapon || this.hp <= 0) return;
 
-		// Weltweite Bounding-Boxen erstellen und Überschneidung prüfen
-		const a = new THREE.Box3().setFromObject(this.data.weapon.object3D);
-		const b = new THREE.Box3().setFromObject(this.data.target.object3D);
-		const isColliding = a.intersectsBox(b);
+		// Nur Treffer akzeptieren, wenn das Ziel mit der definierten Waffe kollidiert.
+		const withEl = event && event.detail ? event.detail.withEl : null;
+		if (withEl !== this.data.weapon) return;
 
-		// Schaden nur beim Übergang von "kein Kontakt" -> "Kontakt"
-		if (isColliding && !this.wasColliding && this.hp > 0) {
-			this.hp = Math.max(0, this.hp - 20);
-			this.updateText();
-			this.el.emit('fight-hit', { damage: 20, hp: this.hp });
-		}
-
-		// Kollisionszustand für den nächsten Tick merken
-		this.wasColliding = isColliding;
+		this.hp = Math.max(0, this.hp - this.data.damage);
+		this.updateText();
+		this.el.emit('fight-hit', { damage: this.data.damage, hp: this.hp });
 	}
 });

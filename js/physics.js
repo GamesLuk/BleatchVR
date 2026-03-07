@@ -79,6 +79,17 @@ AFRAME.registerComponent('player-controller', {
 
     },
 
+    // Öffentliche Schnittstelle für andere Komponenten (z. B. movemtn.js).
+    // Erwartet einen bereits skalierten Bewegungsvektor pro Tick (Weltkoordinaten).
+    moveWithPhysics: function(movement) {
+        // Schutz gegen ungültige/leerere Eingaben, damit externe Aufrufer robust sind.
+        if (!movement || movement.lengthSq() === 0) return;
+
+        // Die eigentliche Kollision wird weiterhin zentral in moveWithCollision behandelt.
+        const pos = this.el.object3D.position;
+        this.moveWithCollision(pos, movement);
+    },
+
     tick: function(time, deltaTime) {
         if (deltaTime === 0) return;
         
@@ -114,8 +125,9 @@ AFRAME.registerComponent('player-controller', {
             movement.normalize();
             movement.multiplyScalar(speed * dt);
             
-            // Apply movement with collision response
-            this.moveWithCollision(pos, movement);
+            // Lokale Tastaturbewegung läuft jetzt über dieselbe öffentliche Physik-Schnittstelle
+            // wie externe Inputs. So bleibt das Kollisionsverhalten überall konsistent.
+            this.moveWithPhysics(movement);
         }
     },
 
