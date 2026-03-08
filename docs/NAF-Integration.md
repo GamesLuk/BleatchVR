@@ -1,4 +1,5 @@
 # Networked-Aframe (NAF) Integration in BleatchVR
+KI - Generated (100 %)
 
 ## Inhaltsverzeichnis
 1. [Überblick](#überblick)

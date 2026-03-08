@@ -1,8 +1,10 @@
 # BleatchVR
 
+Angaben zu der überwiegender Nutzung von künstlicher Intelligenz sind am Enfang eines entsprechenden Files zu finden. In jedem anderen Fall ist KI für über 50 % des Codes verantwortlich. Wir sehen KI als Tool um schnell lange Dokumentationen durchsuchen zu können und zu komplexen Code (zum Beispiel wegen zu weiterführender Mathematik) dennoch im Projekt angeben zu können, statt auf externen Code angewiesen zu sein. Jeder von uns ist selbst für die Menge der genutzten Hilfe verantwortlich.
+
 Potenzielles Problem mit Lootboxen von anderen Spielern. Lootbox id Zusammensetzung: `"lootbox" + <num> + <username>`
 
-Hitkonezpt:
+Hitkonzept:
 
     Player1 hittet Lootbox von Player2:
 

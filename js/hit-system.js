@@ -1,3 +1,5 @@
+// KI - Generated ( > 50 %)
+
 import { breakLootbox } from "./lootbox.js";
 import * as Player from "./player.js";
 

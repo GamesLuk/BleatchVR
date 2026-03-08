@@ -1,3 +1,6 @@
+// KI - Generated ( > 50 %)
+// Explanation in docs\PHYSICS_SYSTEM_DOCUMENTATION.md
+
 import { getOwningPlayerId } from "./network.js";
 import { getSpeed } from "./player.js";
 
