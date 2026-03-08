@@ -1,3 +1,5 @@
+/* KI - Generated (100 %) */
+
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Roboto:wght@300;400;700&display=swap');
 
 * {
@@ -458,11 +460,12 @@ html::-webkit-scrollbar {
     background: linear-gradient(
         180deg,
         transparent 0%,
-        rgba(15, 10, 8, 0.8) 20%,
-        rgba(15, 10, 8, 0.95) 100%
+        rgba(15, 10, 8, 0.85) 10%,
+        rgba(15, 10, 8, 0.98) 100%
     );
-    border-top: 2px solid rgba(212, 175, 55, 0.2);
-    backdrop-filter: blur(10px);
+    border-top: 3px solid rgba(212, 175, 55, 0.5);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
     z-index: 100;
 }
 
