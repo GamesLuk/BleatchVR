@@ -64,7 +64,7 @@ AFRAME.registerComponent('controller-input', {
                   setCurrentHotbarSlot(currentHotbarSlot - 1);
                   lastSlotSwitchAt = now;
               }
-            });
+        });
     }
 });
 
@@ -136,7 +136,6 @@ export function addItemToHotbar(itemSrc) {
 export function updateHotbarSelector() {
     const selector = document.getElementById("hotbar-selector");
     const newPositionX = defaultSelectorPositionX + selectorSpacingX * currentHotbarSlot
-    console.log(`Aktualisiere Hotbar-Selector Position: ${newPositionX}`);
     selector.setAttribute("position", `${newPositionX} 0 0`);
     requestAnimationFrame(() => applyHudOverlay(selector, 101));
 }

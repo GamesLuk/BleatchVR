@@ -1,5 +1,5 @@
 import { updateHudBars } from './hud/hud-bars.js';
-import { getLocalPlayerId, sendUpdateInfo, getPlayerById } from './network.js';
+import { getLocalPlayerId, getPlayerById } from './network.js';
 
 // Helper function for async delays
 function sleep(ms) {
@@ -11,13 +11,13 @@ const INIT_EXPERIENCE = 0;
 const INIT_ENERGY = 100;
 const INIT_SPEED = 5;
 
-const EXPERIENCE_SPEED_BOOST = 20; 	// Speed boost when player is experienced
+const EXPERIENCE_SPEED_BOOST = 10; 	// Speed boost when player is experienced
 const EXPERIENCE_DURATION = 10; 	// Duration of experience boost in seconds
-const EXPERIENCE_INTERVAL = 0.1; 		// Interval for experience boost ticks in seconds
+const EXPERIENCE_INTERVAL = EXPERIENCE_DURATION/100; 		// Interval for experience boost ticks in seconds
 
-const EXHAUSTED_SPEED_BOOST = -20; 	// Speed boost when player is exhausted
+const EXHAUSTED_SPEED_BOOST = -4; 	// Speed boost when player is exhausted
 const EXHAUSTED_DURATION = 10; 		// Duration of exhausted state in seconds
-const EXHAUSTED_INTERVAL = 0.1; 		// Interval for exhausted state ticks in seconds
+const EXHAUSTED_INTERVAL = EXHAUSTED_DURATION/100; 		// Interval for exhausted state ticks in seconds
 
 // Component for player stats synchronization
 AFRAME.registerComponent('player-stats', {
@@ -32,43 +32,50 @@ AFRAME.registerComponent('player-stats', {
   init: function() {}
 });
 
-// NAF Schema registrieren
-NAF.schemas.add({
-  template: '#player-template',
-  components: [
-    'position',
-    'rotation',
-    {
-      component: 'player-stats',
-      property: 'health'  // Synchronisiert nur health
-    },
-	{
-      component: 'player-stats',
-      property: 'experience'  // Synchronisiert nur experience
-    },
-    {
-      component: 'player-stats', 
-      property: 'energy'  // Synchronisiert nur energy
-    },
-	{
-      component: 'player-stats', 
-      property: 'onCooldown'  // Synchronisiert nur onCooldown
-    },
-	{
-      component: 'player-stats', 
-      property: 'speed'  // Synchronisiert nur speed
-    }
-  ]
-});
+// NAF Schema registrieren - wird aufgerufen, wenn NAF bereit ist
+export function registerPlayerSchema() {
+  NAF.schemas.add({
+    template: '#player-template',
+    components: [
+      'position',
+      'rotation',
+      {
+        component: 'player-stats',
+        property: 'health'  // Synchronisiert nur health
+      },
+      {
+        component: 'player-stats',
+        property: 'experience'  // Synchronisiert nur experience
+      },
+      {
+        component: 'player-stats', 
+        property: 'energy'  // Synchronisiert nur energy
+      },
+      {
+        component: 'player-stats', 
+        property: 'onCooldown'  // Synchronisiert nur onCooldown
+      },
+      {
+        component: 'player-stats', 
+        property: 'speed'  // Synchronisiert nur speed
+      }
+    ]
+  });
+  console.log('Player NAF schema registered successfully');
+}
 
 async function onDeath() {
-
+	// Capture the current URL with all parameters
+	const currentUrl = window.location.href;
+	const returnUrl = encodeURIComponent(currentUrl);
+	
+	// Navigate to death screen with return URL
+	window.location.href = `/files/html/death-menu.html?returnUrl=${returnUrl}&cause=Gefallen im Kampf`;
 }
 
 export async function onExprienced() {
 	setSpeed(INIT_SPEED + EXPERIENCE_SPEED_BOOST);
 	for (let i = 0; i < EXPERIENCE_DURATION/EXPERIENCE_INTERVAL; i++) {
-		console.log("Experience tick", i);
 		await sleep(EXPERIENCE_INTERVAL * 1000);
 		setExperience(100 - 100 * (i+1) / (EXPERIENCE_DURATION/EXPERIENCE_INTERVAL));
 		updateHudBars();
@@ -81,7 +88,7 @@ export async function onExhausted() {
 	setSpeed(INIT_SPEED + EXHAUSTED_SPEED_BOOST);
 	for (let i = 0; i < EXHAUSTED_DURATION/EXHAUSTED_INTERVAL; i++) {
 		await sleep(EXHAUSTED_INTERVAL * 1000);
-		setExperience(100 - 100 * (i+1) / (EXHAUSTED_DURATION/EXHAUSTED_INTERVAL));
+		setEnergy(100 * (i+1) / (EXHAUSTED_DURATION/EXHAUSTED_INTERVAL));
 		updateHudBars();
 	}
 	setSpeed(INIT_SPEED);

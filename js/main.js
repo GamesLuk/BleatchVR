@@ -8,8 +8,9 @@ import "./movemtn.js";
 import * as Network from "./network.js";
 import "./hit-system.js"
 
+const scene = document.querySelector('a-scene');
+
 // Global initialization for inline html scripts
-window.updateHudBars = updateHudBars;
 window.getHealth = Player.getHealth;
 window.setHealth = Player.setHealth;
 window.getExperience = Player.getExperience;
@@ -20,10 +21,7 @@ window.setEnergy = Player.setEnergy;
 window.useCurrentHotbarItem = HotBar.useCurrentHotbarItem;
 window.addItemToHotbar = HotBar.addItemToHotbar;
 window.setCurrentHotbarSlot = HotBar.setCurrentHotbarSlot;
-window.getCurrentHotbarSlot = HotBar.getCurrentHotbarSlot;
-window.updateHotbarSelector = HotBar.updateHotbarSelector;
 
-window.getRandomLootSrc = LootBox.getRandomLootSrc;
 window.breakLootbox = LootBox.breakLootbox;
 window.getActiveLootboxCount = LootBox.getActiveLootboxCount;
 
@@ -32,17 +30,37 @@ window.getLocalPlayerId = Network.getLocalPlayerId;
 window.getOwningPlayerId = Network.getOwningPlayerId;
 window.getPlayerById = Network.getPlayerById;
 
-window.onExperienced = Player.onExprienced;
-window.onExhausted = Player.onExhausted;
+window.sendMessageToPlayer = Network.sendMessageToPlayer;
+window.sendMessageToAll = Network.sendMessageToAll;
 
-// Initialize HUD after scene is loaded
-const scene = document.querySelector('a-scene');
-if (scene.hasLoaded) {
+// Set networked-scene BEFORE scene initialization
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const lobby = urlParams.get('lobby') || 'default';
+
+scene.setAttribute('networked-scene', `room: ${lobby}; adapter: socketio; serverURL: /;`);	
+
+// Initialize NAF when NAF is ready
+scene.addEventListener('adapter-ready', () => {
+	console.log('NAF adapter ready, registering schemas...');
+	Player.registerPlayerSchema();
+	
+	// Wait for socket to be available
+	const checkSocket = setInterval(() => {
+		if (NAF.connection?.adapter?.socket) {
+			clearInterval(checkSocket);
+			console.log('Socket is ready, setting up network listeners...');
+			Network.setupNetworkListeners();
+		}
+	}, 100);
+});
+
+// Request current lootbox status from other clients, to update the lootbox states for the new client
+LootBox.requestLootboxStatus();
+
+scene.addEventListener('loaded', () => {
+
+	// Initialize HUD after scene is loaded
 	updateHudBars();
-	window.updateHotbarSelector();
-} else {
-	scene.addEventListener('loaded', () => {
-		updateHudBars();
-		window.updateHotbarSelector();
-	});
-}
+	HotBar.updateHotbarSelector();
+});

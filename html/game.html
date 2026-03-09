@@ -32,11 +32,10 @@
 				<a-asset-item id="weapon-model" src="/files/models/weapon/Long_Ax_1.gltf"></a-asset-item>
 				<a-asset-item id="lootbox-model" src="/files/models/lootbox.glb"></a-asset-item>
 
-        <!-- Avatar Template for Networked-Aframe -->
-        <template id="player-template">
+        		<!-- Avatar Template for Networked-Aframe -->
+        		<template id="player-template">
 					<a-sphere id="networked-player" player-stats color="#5985ff" radius="0.5" collision-box="width: 0.7; height: 0.7; depth: 0.7" position="0 0 0"></a-sphere>
-        </template>
-
+        		</template>
 			</a-assets>
 
 			<!-- Pico Controller (Gamepad API) -->
@@ -65,11 +64,11 @@
 						<a-image src="#empty-bar" hud-bar="num: 0"></a-image>
 						<a-image id="health-bar" src="#full-health-bar" hud-bar="num: 0"></a-image>
 
-						<a-image src="#empty-bar" hud-bar="num: 1"></a-image>
-						<a-image id="experience-bar" src="#full-experience-bar" hud-bar="num: 1"></a-image>
-
 						<a-image src="#empty-bar" hud-bar="num: 2"></a-image>
-						<a-image id="energy-bar" src="#full-energy-bar" hud-bar="num: 2"></a-image>
+						<a-image id="experience-bar" src="#full-experience-bar" hud-bar="num: 2"></a-image>
+
+						<a-image src="#empty-bar" hud-bar="num: 1"></a-image>
+						<a-image id="energy-bar" src="#full-energy-bar" hud-bar="num: 1"></a-image>
 					</a-entity>
 
 					<!-- HUD Hotbar -->
@@ -81,7 +80,7 @@
 						<a-image id="hotbar-slot3" src="#scroll" hud-hotbar-slot="num: 3"></a-image>
 						<a-image id="hotbar-slot4" src="#book" hud-hotbar-slot="num: 4"></a-image>
 					</a-image>
-				
+
 				</a-camera>
 
 			</a-entity>
@@ -104,14 +103,7 @@
 
 		<script>
 
-		  	// Set networked-scene BEFORE scene initialization
-      		const queryString = window.location.search;
-      		const urlParams = new URLSearchParams(queryString);
-      		const lobby = urlParams.get('lobby') || 'default';
 
-      		const scene = document.querySelector('a-scene');
-      		scene.setAttribute('networked-scene', `room: ${lobby}; adapter: socketio; serverURL: /;`);
-			
 		</script>
 	</body>
 </html>

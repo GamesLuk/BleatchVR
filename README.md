@@ -10,7 +10,31 @@ Hitkonzept:
 
         Player1 (Erkennt Collision von lokal Weapon mit networked Lootbox):
 
+            Wenn Player1 noch genug Energy,
+            dann Lootbox wird zerstört und Player1 bekommt Item,
+            sonst return
+
+            Spielt Sound
+
         Player2 (Erkennt Collision von networked Weapon mit lokal Lootbox):
+
+            Wenn Player1 noch genug Energy,
+            dann Lootbox wird zerstört und synchronisiert mit allen anderen,
+            sonst return
+
+    Player2 wird Lead - Spawner statt Player1:
+
+        Player1 (Erkennt, dass er nicht mehr Lead ist):
+
+            Spawnt keine neuen Lootboxen mehr
+
+            Bleibt bei seiner aktuellen Konfiguration
+
+        Player2 (Erkennt, dass er jetzt Lead ist):
+
+            Bleibt bei der aktuellen Konfiguration
+
+            Übernimmt eventuelle Spawnings in der Zunkunft
 
     Player1 hittet Player2:
 
@@ -27,7 +51,7 @@ Hitkonzept:
 
         Player2 (Erkennt Collision von networked Weapon mit lokal Player):
 
-            Wenn Player2 noch genug Energy,
+            Wenn Player1 noch genug Energy,
             dann Health = Health - Abzug,
             sonst return
 
