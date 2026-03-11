@@ -88,7 +88,7 @@ AFRAME.registerComponent('player-controller', {
         const el = this.el;
         const pos = el.object3D.position;
         const dt = deltaTime / 1000;
-        const speed = getSpeed(getOwningPlayerId(el));
+        const speed = getSpeed(getOwningPlayerId(el)) || this.el.getAttribute('player-controller')?.speed || 5;
 
 
         // Get camera rotation

@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+		<script type="module" src="/files/js/movemtn.js"></script>
 		<script>
 			// === PHYSICS CONFIG ===
 			const PHYSICS_DEBUG = true;  // Setze auf false um Wireframes zu deaktivieren
@@ -347,8 +348,14 @@
 			<a-entity 
 				id="player" 
 				position="0 1.6 5"
-				player-controller="speed: 15; radius: 0.25">
-				<a-camera look-controls="pointerLockEnabled: true" wasd-controls="enabled: false"></a-camera>
+				player-controller="speed: 15; radius: 0.25"
+				right-thumbstick-move="controller: #weapon; camera: #playerCamera; speed: 2.8; deadzone: 0.2">
+
+				<a-entity id="weapon"
+					tracked-controls="hand: right; controller: 1; idPrefix: PICO; autoHide: false; space: grip">
+				</a-entity>
+
+				<a-camera id="playerCamera" look-controls="pointerLockEnabled: true" wasd-controls="enabled: false"></a-camera>
 			</a-entity>
 
 			<!-- Licht -->

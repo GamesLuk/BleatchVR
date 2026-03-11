@@ -1,4 +1,5 @@
 import { handleLootboxBreak , handleLootboxSpawn, handleLootboxStatusRequest} from "./lootbox.js";
+import { handlePlayerDamage } from "./hit-system.js";
 
 const REAPEAT_FAILED_MESSAGES_INTERVAL = 5; // The time in seconds after a failed message will be resent, to avoid message loss due to temporary connection issues
 
@@ -65,6 +66,11 @@ export function setupNetworkListeners() {
                 // The existing clients will respond with direct messages of type "lootbox-spawn" for each currently spawned lootbox, 
                 // so that the new client can update their lootbox states accordingly.
                 handleLootboxStatusRequest(message.data);
+                break;
+            case "player-damage":
+                // Temporär: Schadensnachricht von Angreifer empfangen.
+                // Wird ersetzt durch lokale Collision Detection wenn Waffen networked sind.
+                handlePlayerDamage(message.data);
                 break;
         }
     });

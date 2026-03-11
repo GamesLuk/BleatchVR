@@ -114,10 +114,7 @@ export function handleLootboxSpawn(lootboxId) {
     lootbox.components.lootbox.isSpawned = true;
     currentActiveLootboxes++;
 
-    lootbox.addEventListener('obbcollisionstarted', (event) => {
-        const collidedWithWeapon = event.detail.withEl.getAttribute("id") === "weapon";              
-        if(collidedWithWeapon) breakLootbox(lootbox.getAttribute("id"));
-    });
+    // Hit-Detection für Lootboxen wird über weapon-hit in hit-system.js gesteuert.
 }
 
 export function handleLootboxBreak(lootboxId){
