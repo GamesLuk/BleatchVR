@@ -39,9 +39,7 @@ AFRAME.registerComponent('controller-input', {
         const controller = this.el;
         
         controller.addEventListener('buttondown', (event) => {
-            if (event.detail.id === 2) {
-                Player.setHealth(50);
-            }
+            useCurrentHotbarItem();
         });
 
         controller.addEventListener('axismove', (event) => {
@@ -55,8 +53,6 @@ AFRAME.registerComponent('controller-input', {
               const now = Date.now();
               if (now - lastSlotSwitchAt < slotSwitchCooldownMs) return;
 
-              // hier deine Aktion bei Joystick-Änderung
-              // z.B. Slot wechseln, Bewegung, UI steuern
               if (x > 0 && currentHotbarSlot < maxHotbarSlots - 1) {
                   setCurrentHotbarSlot(currentHotbarSlot + 1);
                   lastSlotSwitchAt = now;

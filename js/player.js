@@ -141,7 +141,7 @@ export function setEnergy(value) {
 	if (!player) return;
 	player.components['player-stats'].data.energy = Math.max(0, Math.min(100, value));	// Clamp value between 0 and 100
 	updateHudBars();
-	if (player.components['player-stats'].data.energy === 0) onExhausted();
+	if (player.components['player-stats'].data.energy < 33 && !player.components['player-stats'].data.onCooldown) onExhausted();
 }
 
 export function isOnCooldown(playerId) {

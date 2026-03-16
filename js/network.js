@@ -3,7 +3,7 @@ import { handlePlayerDamage } from "./hit-system.js";
 
 const REAPEAT_FAILED_MESSAGES_INTERVAL = 5; // The time in seconds after a failed message will be resent, to avoid message loss due to temporary connection issues
 
-// Send packet to player to inform about updated stats (health, experience, energy)
+// Send packet to one specific player
 export function sendMessageToPlayer(targetNetworkId, messageType, data) {
     const socket = NAF.connection.adapter.socket;
     
@@ -22,7 +22,7 @@ export function sendMessageToPlayer(targetNetworkId, messageType, data) {
     });
 }
 
-// Im Client (network.js)
+// Send packet to all other players (except the sender)
 export function sendMessageToAll(messageType, data) {
     const socket = NAF.connection.adapter.socket;
 
@@ -40,6 +40,7 @@ export function sendMessageToAll(messageType, data) {
     });
 }
 
+// Setup listeners for incoming messages
 export function setupNetworkListeners() {
     const socket = NAF.connection.adapter.socket;
 
@@ -98,6 +99,7 @@ export function setupNetworkListeners() {
     });
 }
 
+// Helper function to get the next networked parent element (e.g. for getting the owning player of a weapon when hitting a lootbox)
 export function getOwningPlayerId(element) {
     while (element && !element.hasAttribute("networked")) {
         element = element.parentElement;
@@ -105,6 +107,7 @@ export function getOwningPlayerId(element) {
     return element ? element.getAttribute("networked").owner : null;
 }
 
+// Helper function to get the local player's network ID
 export function getLocalPlayerId() {
     if (!NAF || !NAF.connection) {
         console.error("NAF connection not available. Retrying getLocalPlayerId in a few seconds...");
@@ -115,6 +118,7 @@ export function getLocalPlayerId() {
     return localPlayer ? localPlayer.getAttribute("networked").owner : null;
 }
 
+// Helper function to get all player IDs
 export function getAllPlayerIds() {
     const playerIds = new Set();
     const players = document.querySelectorAll("[networked]");
@@ -124,12 +128,14 @@ export function getAllPlayerIds() {
     return [...playerIds].sort();
 }
 
+// Helper function to get all other player IDs (except the local player)
 export function getAllOtherPlayerIds() {
     const allPlayerIds = new Set(getAllPlayerIds());
     allPlayerIds.delete(getLocalPlayerId());
     return [...allPlayerIds].sort();
 }
 
+// Helper function to get player element by ID
 export function getPlayerById(playerId) {
     const players = document.querySelectorAll("[networked]");
     for (const player of players) {
