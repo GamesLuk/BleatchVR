@@ -36,6 +36,12 @@
         		<template id="player-template">
 					<a-sphere id="networked-player" player-stats color="#5985ff" radius="0.5" collision-box="width: 0.7; height: 0.7; depth: 0.7" position="0 0 0"></a-sphere>
         		</template>
+				<template id="weapon-template">
+					<a-gltf-model id="networked-weapon" src="#weapon-model" position="0.43 0 -0.3" rotation="0 -90 90" scale="0.7 0.7 0.7"></a-gltf-model>
+				</template>
+				<template id="shield-template">
+					<a-gltf-model id="networked-shield" src="#shield-model" position="-0.05 0 0.3" rotation="0 -90 90" scale="0.3 0.3 0.3"></a-gltf-model>
+				</template>
 			</a-assets>
 
 			<!-- Player Entity -->
@@ -44,15 +50,20 @@
                 player-stats
                 player-hittable
                 player-controller="speed: 15; radius: 0.25"
-                position="0 0 0"
+                position="0 1.5 0"
                 right-thumbstick-move="controller: #weapon; camera: #playerCamera; speed: 2.8; deadzone: 0.2">
 
 				<!-- Pico Controller (Gamepad API) -->
-				<a-entity id="shield" listener controller-input tracked-controls="hand: left; controller: 0; idPrefix: PICO; autoHide: false; space: grip">
+				<a-entity id="shield" 
+						networked="template:#shield-template;attachTemplateToLocal:false;"
+						listener 
+						controller-input 
+						tracked-controls="hand: left; controller: 0; idPrefix: PICO; autoHide: false; space: grip">
 					<a-gltf-model position="-0.05 0 0.3" rotation="0 -90 90" scale="0.3 0.3 0.3" src="#shield-model"></a-gltf-model>
 					<a-cylinder position="0 0 -0.0" rotation="90 0 0" radius="0.02" height="0.04" color="#FFCAFF"></a-cylinder>
 				</a-entity>
 				<a-entity id="weapon"
+						networked="template:#weapon-template;attachTemplateToLocal:false;"
 						tracked-controls="hand: right; controller: 1; idPrefix: PICO; autoHide: false; space: grip"
 						raycaster="showLine: true; far: 10; lineColor: #24CAFF"
 						cursor="rayOrigin: entity"
