@@ -33,7 +33,6 @@ AFRAME.registerComponent('right-thumbstick-move', {
 	init: function () {
 		this.up = new THREE.Vector3(0, 1, 0);
 		this.moveVector = new THREE.Vector3();
-		this.lastMoveStep = new THREE.Vector3();
 		this.controllerEl = this.data.controller;
 		this.cameraEl = this.data.camera;
 	},
@@ -93,37 +92,24 @@ AFRAME.registerComponent('right-thumbstick-move', {
 		const refs = this.getResolvedRefs();
 		const controllerEl = refs.controllerEl || this.data.controller;
 		const cameraEl = refs.cameraEl || this.data.camera;
-		if (!controllerEl || !cameraEl) {
-			this.lastMoveStep.set(0, 0, 0);
-			return;
-		}
+		if (!controllerEl || !cameraEl) return;
 
 		const gamepad = this.getGamepad(controllerEl);
-		if (!gamepad) {
-			this.lastMoveStep.set(0, 0, 0);
-			return;
-		}
+		if (!gamepad) return;
 
 		const axes = this.readStickAxes(gamepad);
-		if (!axes) {
-			this.lastMoveStep.set(0, 0, 0);
-			return;
-		}
+		if (!axes) return;
 
 		const axesX = axes.x || 0;
 		const axesY = axes.y || 0;
 		const direction = getMainDirection(axesX, axesY, this.data.deadzone);
-		if (!direction) {
-			this.lastMoveStep.set(0, 0, 0);
-			return;
-		}
+		if (!direction) return;
 
 		this.moveVector.set(direction.x, 0, direction.z);
 		this.moveVector.applyAxisAngle(this.up, cameraEl.object3D.rotation.y);
 
 		const step = this.data.speed * (deltaTime / 1000);
 		this.moveVector.multiplyScalar(step);
-		this.lastMoveStep.copy(this.moveVector);
 
 		// Use player-controller's collision system if available (physics.js),
 		// otherwise move freely for scenes without physics
