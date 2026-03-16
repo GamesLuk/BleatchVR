@@ -5,6 +5,7 @@ import { updateHudBars } from "./hud/hud-bars.js";
 import "./physics.js";
 import * as LootBox from "./lootbox.js";
 import "./movemtn.js";
+import "./avatar-rig.js";
 import * as Network from "./network.js";
 import "./hit-system.js"
 

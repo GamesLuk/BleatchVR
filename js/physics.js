@@ -11,7 +11,10 @@ AFRAME.registerComponent('collision-box', {
     schema: {
         width: {type: 'number', default: 1},
         height: {type: 'number', default: 1},
-        depth: {type: 'number', default: 1}
+        depth: {type: 'number', default: 1},
+        offsetX: {type: 'number', default: 0},
+        offsetY: {type: 'number', default: 0},
+        offsetZ: {type: 'number', default: 0}
     },
 
     init: function() {
@@ -27,6 +30,7 @@ AFRAME.registerComponent('collision-box', {
                 wireframe: true 
             });
             const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(this.data.offsetX, this.data.offsetY, this.data.offsetZ);
             this.el.object3D.add(mesh);
         }
     },
@@ -52,7 +56,7 @@ AFRAME.registerComponent('collision-box', {
         );
         
         return {
-            center: new THREE.Vector2(position.x, position.z),
+            center: new THREE.Vector2(position.x + this.data.offsetX, position.z + this.data.offsetZ),
             forward: forward,
             right: right,
             halfWidth: hw,
