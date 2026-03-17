@@ -20,7 +20,7 @@
 
     # Serve welcome page at root
     handle / {
-        rewrite * /files/html/welcome.html
+        rewrite * /files/html/main-menu.html
         root * /app/files
         uri strip_prefix /files
         file_server
