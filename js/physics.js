@@ -4,7 +4,7 @@
 import { getOwningPlayerId } from "./network.js";
 import { getSpeed } from "./player.js";
 
-const PHYSICS_DEBUG = true;  // Setze auf false um Wireframes zu deaktivieren
+const PHYSICS_DEBUG = false;  // Setze auf false um Wireframes zu deaktivieren
 
 // Oriented Collision Component (rotation-aware)
 AFRAME.registerComponent('collision-box', {

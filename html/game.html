@@ -32,17 +32,16 @@
 				<a-asset-item id="shield-model" src="/files/models/shield.glb"></a-asset-item>
 				<a-asset-item id="weapon-model" src="/files/models/weapon/Long_Ax_1.gltf"></a-asset-item>
 				<a-asset-item id="lootbox-model" src="/files/models/lootbox.glb"></a-asset-item>
-				<a-asset-item id="house" src="/files/models/abandoned_house.glb"></a-asset-item>
 
         		<!-- Avatar Template for Networked-Aframe -->
         		<template id="player-template">
 					<a-sphere id="networked-player" player-stats color="#5985ff" radius="0.5" collision-box="width: 0.7; height: 0.7; depth: 0.7" position="0 0 0"></a-sphere>
         		</template>
 				<template id="weapon-template">
-					<a-gltf-model id="networked-weapon" src="#weapon-model" position="0.43 0 -0.3" rotation="0 -90 90" scale="0.7 0.7 0.7"></a-gltf-model>
+					<a-gltf-model id="networked-weapon" src="#weapon-model" position="0 0 0" rotation="0 0 0" scale="0.7 0.7 0.7"></a-gltf-model>
 				</template>
 				<template id="shield-template">
-					<a-gltf-model id="networked-shield" src="#shield-model" position="-0.05 0 0.3" rotation="0 -90 90" scale="0.3 0.3 0.3"></a-gltf-model>
+					<a-gltf-model id="networked-shield" src="#shield-model" position="0 0 0" rotation="0 0 0" scale="0.3 0.3 0.3"></a-gltf-model>
 				</template>
 			</a-assets>
 
@@ -129,13 +128,11 @@
 			<a-cylinder position="10 0 23" radius="0.4" height="1.8" color="#7BC8A4" collision-box="width: 0.8; height: 1.8; depth: 0.8"></a-cylinder>
 			<a-cylinder position="-20 0 -24" radius="0.4" height="1.8" color="#7BC8A4" collision-box="width: 0.8; height: 1.8; depth: 0.8"></a-cylinder>
 
-            <a-gltf-model id="house" position="-10 0 -10" scale="0.8 0.8 0.8" src="#house" collision-box="width: 7; height: 10; depth: 6; offsetZ: 1"></a-gltf-model>
-
 			<!-- Map boundaries -->
-			<a-box id="map-boundary-north" position="0 5 -35" visible="true" collision-box="width: 120; height: 20; depth: 4"></a-box>
-			<a-box id="map-boundary-south" position="0 5 35" visible="true" collision-box="width: 120; height: 20; depth: 4"></a-box>
-			<a-box id="map-boundary-west" position="-35 5 0" visible="true" collision-box="width: 4; height: 20; depth: 120"></a-box>
-			<a-box id="map-boundary-east" position="35 5 0" visible="true" collision-box="width: 4; height: 20; depth: 120"></a-box>
+			<a-box id="map-boundary-north" position="0 5 -35" visible="false" collision-box="width: 120; height: 20; depth: 4"></a-box>
+			<a-box id="map-boundary-south" position="0 5 35" visible="false" collision-box="width: 120; height: 20; depth: 4"></a-box>
+			<a-box id="map-boundary-west" position="-35 5 0" visible="false" collision-box="width: 4; height: 20; depth: 120"></a-box>
+			<a-box id="map-boundary-east" position="35 5 0" visible="false" collision-box="width: 4; height: 20; depth: 120"></a-box>
 
 			<a-sky color="#ECECEC"></a-sky>
 		</a-scene>

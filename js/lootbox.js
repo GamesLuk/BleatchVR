@@ -1,8 +1,8 @@
 import { addItemToHotbar } from "./hud/hud-hotbar.js";
 import { sendMessageToAll, getAllPlayerIds, getLocalPlayerId, sendMessageToPlayer } from "./network.js";
 
-const MAX_LOOTBOXES = 1;    // Maximum number of lootboxes allowed in the scene at any time
-const MIN_LOOTBOXES = 1;    // Minimum number of lootboxes to maintain in the scene
+const MAX_LOOTBOXES = 10;    // Maximum number of lootboxes allowed in the scene at any time
+const MIN_LOOTBOXES = 3;    // Minimum number of lootboxes to maintain in the scene
 const SPAWN_CHANCE = 1;  // Chance to spawn a lootbox each tick (0.01 -> 1%)
 
 const COOLDOWN_TIME = 30; // Cooldown time in seconds before a broken lootbox can respawn

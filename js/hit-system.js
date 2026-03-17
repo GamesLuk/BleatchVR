@@ -50,6 +50,8 @@ AFRAME.registerComponent('weapon-hit', {
 			this._targetBox.setFromObject(lootbox.object3D);
 			if (this._targetBox.isEmpty()) return;
 
+			this._targetBox.expandByScalar(-0.1);
+
 			const id = lootbox.getAttribute("id");
 			const isColliding = this._weaponBox.intersectsBox(this._targetBox);
 
@@ -72,6 +74,8 @@ AFRAME.registerComponent('weapon-hit', {
 
 			this._targetBox.setFromObject(playerEl.object3D);
 			if (this._targetBox.isEmpty()) return;
+
+			this._targetBox.expandByScalar(-0.1);
 
 			const isColliding = this._weaponBox.intersectsBox(this._targetBox);
 
