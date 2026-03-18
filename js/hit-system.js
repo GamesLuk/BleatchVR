@@ -22,47 +22,19 @@ const DEFAULT_HIT_DAMAGE = 20;
 // Multiplayer Hit-System (game.html)
 // ==========================================
 
-// Markiert ein Entity als Kollisionsobjekt (z. B. unsichtbare Waffen-Hitbox).
-AFRAME.registerComponent('object-collider', {});
-
 /**
  * Attacker-Seite: Wird auf die lokale Waffe gelegt.
  * Prüft jeden Frame auf Kollision mit Lootboxen und anderen Spielern.
  */
 AFRAME.registerComponent('weapon-hit', {
-	schema: {
-		collider: { type: 'selector' },
-		hitbox: { type: 'selector' }
-	},
-
 	init: function () {
 		this._weaponBox = new THREE.Box3();
 		this._targetBox = new THREE.Box3();
 		this._collidingWith = new Set();
-		this._hitboxEl = null;
-		this._resolveHitbox();
-	},
-
-	update: function () {
-		this._resolveHitbox();
-	},
-
-	_resolveHitbox: function () {
-		this._hitboxEl = this.data.collider
-			|| this.data.hitbox
-			|| this.el.querySelector('[object-collider]')
-			|| this.el.querySelector('[weapon-hitbox]')
-			|| this.el;
 	},
 
 	tick: function () {
-		if (!this._hitboxEl || !this._hitboxEl.object3D) return;
-
-		this._weaponBox.setFromObject(this._hitboxEl.object3D);
-		if (this._weaponBox.isEmpty()) return;
-
-		// Leichtes Schrumpfen verhindert Treffer aus zu großer Distanz durch AABB-Luft.
-		this._weaponBox.expandByScalar(-0.02);
+		this._weaponBox.setFromObject(this.el.object3D);
 		if (this._weaponBox.isEmpty()) return;
 
 		this._checkLootboxCollisions();
@@ -80,15 +52,14 @@ AFRAME.registerComponent('weapon-hit', {
 
 			this._targetBox.expandByScalar(-0.1);
 
-			const id = lootbox.getAttribute("id") || lootbox.object3D.uuid;
-			const collisionKey = `lootbox:${id}`;
+			const id = lootbox.getAttribute("id");
 			const isColliding = this._weaponBox.intersectsBox(this._targetBox);
 
-			if (isColliding && !this._collidingWith.has(collisionKey)) {
-				this._collidingWith.add(collisionKey);
+			if (isColliding && !this._collidingWith.has(id)) {
+				this._collidingWith.add(id);
 				this._onHitLootbox(lootbox);
 			} else if (!isColliding) {
-				this._collidingWith.delete(collisionKey);
+				this._collidingWith.delete(id);
 			}
 		});
 	},
@@ -106,14 +77,13 @@ AFRAME.registerComponent('weapon-hit', {
 
 			this._targetBox.expandByScalar(-0.1);
 
-			const collisionKey = `player:${ownerId}`;
 			const isColliding = this._weaponBox.intersectsBox(this._targetBox);
 
-			if (isColliding && !this._collidingWith.has(collisionKey)) {
-				this._collidingWith.add(collisionKey);
+			if (isColliding && !this._collidingWith.has(ownerId)) {
+				this._collidingWith.add(ownerId);
 				this._onHitPlayer(playerEl, ownerId);
 			} else if (!isColliding) {
-				this._collidingWith.delete(collisionKey);
+				this._collidingWith.delete(ownerId);
 			}
 		});
 	},
