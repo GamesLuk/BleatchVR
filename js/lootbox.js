@@ -35,8 +35,8 @@ AFRAME.registerComponent('lootbox', {
 		num: {type: 'int', default: 0}
 	},
 	init: function () {
-		this.el.setAttribute("src", "#lootbox-model");
-		this.el.setAttribute("scale", "0.2 0.2 0.2");
+		//this.el.setAttribute("src", "#lootbox-model");
+		this.el.setAttribute("scale", "0.5 0.5 0.5");
         this.el.setAttribute("visible", "false");
         this.el.setAttribute("class", "lootbox");
         this.isSpawned = false;  // Track if this lootbox has been spawned

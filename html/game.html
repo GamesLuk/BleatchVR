@@ -31,14 +31,14 @@
 				<!-- Models -->
 				<a-asset-item id="shield-model" src="/files/models/shield.glb"></a-asset-item>
 				<a-asset-item id="weapon-model" src="/files/models/weapon/Long_Ax_1.gltf"></a-asset-item>
-				<a-asset-item id="lootbox-model" src="/files/models/lootbox.glb"></a-asset-item>
+				<!-- <a-asset-item id="lootbox-model" src="/files/models/lootbox.glb"></a-asset-item>-->
 
         		<!-- Avatar Template for Networked-Aframe -->
         		<template id="player-template">
 					<a-sphere id="networked-player" player-stats color="#5985ff" radius="0.5" collision-box="width: 0.7; height: 0.7; depth: 0.7" position="0 0 0"></a-sphere>
         		</template>
 				<template id="weapon-template">
-					<a-gltf-model id="networked-weapon" src="#weapon-model" position="0 0 0" rotation="0 0 0" scale="0.7 0.7 0.7"></a-gltf-model>
+					<a-gltf-model id="networked-weapon" src="#weapon-model" position="0 0 0" rotation="90 0 0" scale="0.7 0.7 0.7"></a-gltf-model>
 				</template>
 				<template id="shield-template">
 					<a-gltf-model id="networked-shield" src="#shield-model" position="0 0 0" rotation="0 0 0" scale="0.3 0.3 0.3"></a-gltf-model>
@@ -52,7 +52,7 @@
                 player-hittable
                 player-controller="speed: 15; radius: 0.25"
 				local-avatar-rig="camera: #playerCamera; head: #local-head; body: #local-body; bodyYOffset: -0.9"
-                position="0 1.5 0"
+                position="0 0.8 0"
                 right-thumbstick-move="controller: #weapon; camera: #playerCamera; speed: 2.8; deadzone: 0.2">
 
 				<!-- Pico Controller (Gamepad API) -->
@@ -105,7 +105,7 @@
 
 		    <a-entity environment="preset: forest; dressingAmount: 500"></a-entity>
 
-			<a-gltf-model id="lootbox0" position="-22 1 16" lootbox></a-gltf-model>
+			<!--<a-gltf-model id="lootbox0" position="-22 1 16" lootbox></a-gltf-model>
 			<a-gltf-model id="lootbox1" position="14 1 -24" lootbox></a-gltf-model>
 			<a-gltf-model id="lootbox2" position="-7 1 21" lootbox></a-gltf-model>
 			<a-gltf-model id="lootbox3" position="23 1 8" lootbox></a-gltf-model>
@@ -115,7 +115,19 @@
 			<a-gltf-model id="lootbox7" position="18 1 -11" lootbox></a-gltf-model>
 			<a-gltf-model id="lootbox8" position="-3 1 12" lootbox></a-gltf-model>
 			<a-gltf-model id="lootbox9" position="10 1 23" lootbox></a-gltf-model>
-			<a-gltf-model id="lootbox10" position="-20 1 -24" lootbox></a-gltf-model>
+			<a-gltf-model id="lootbox10" position="-20 1 -24" lootbox></a-gltf-model>-->
+
+			<a-box id="lootbox0" position="-22 1 16" lootbox></a-box>
+			<a-box id="lootbox1" position="14 1 -24" lootbox></a-box>
+			<a-box id="lootbox2" position="-7 1 21" lootbox></a-box>
+			<a-box id="lootbox3" position="23 1 8" lootbox></a-box>
+			<a-box id="lootbox4" position="-16 1 -14" lootbox></a-box>
+			<a-box id="lootbox5" position="4 1 24" lootbox></a-box>
+			<a-box id="lootbox6" position="-25 1 -5" lootbox></a-box>
+			<a-box id="lootbox7" position="18 1 -11" lootbox></a-box>
+			<a-box id="lootbox8" position="-3 1 12" lootbox></a-box>
+			<a-box id="lootbox9" position="10 1 23" lootbox></a-box>
+			<a-box id="lootbox10" position="-20 1 -24" lootbox></a-box>
 
 			<a-cylinder position="-22 0 16" radius="0.4" height="1.8" color="#7BC8A4" collision-box="width: 0.8; height: 1.8; depth: 0.8"></a-cylinder>
 			<a-cylinder position="14 0 -24" radius="0.4" height="1.8" color="#7BC8A4" collision-box="width: 0.8; height: 1.8; depth: 0.8"></a-cylinder>
@@ -139,7 +151,13 @@
 		</a-scene>
 
 		<script>
+			const weaponEl = document.querySelector("#weapon");
+			const shieldEl = document.querySelector("#shield");
 
+			weaponEl.sceneEl.renderer.sortObjects = true;
+			weaponEl.object3D.renderOrder = 200;
+			shieldEl.sceneEl.renderer.sortObjects = true;
+			shieldEl.object3D.renderOrder = 200;
 
 		</script>
 	</body>
